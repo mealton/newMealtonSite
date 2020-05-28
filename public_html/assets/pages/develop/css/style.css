@@ -1,0 +1,131 @@
+fieldset {
+    width: 500px;
+    max-width: 100%;
+    margin: 30px 0 0 100px;
+    padding: 10px 10px 15px;
+    border: 1px solid #c0bcbc;
+    border-radius: 15px;
+}
+
+fieldset legend {
+    padding: 0 10px;
+    font-size: 16px;
+    display: inline-block;
+    width: auto;
+    border: none;
+    font-weight: bold;
+    margin: 0;
+}
+
+fieldset input {
+    margin-bottom: 10px;
+}
+
+#f {
+    margin-top: 50px;
+}
+
+fieldset fieldset {
+    margin: 0;
+}
+
+ul.userlist{
+    margin-bottom: 15px;
+    max-height: 500px;
+    overflow: auto;
+}
+
+ul.userlist::-webkit-scrollbar { width: 5px; }
+
+ul.userlist::-webkit-scrollbar-track {
+    background: #f7efef;
+    border-radius: 5px;
+}
+
+ul.userlist::-webkit-scrollbar-thumb {
+    background: #dcd9d9;
+    border-radius: 4px;
+}
+
+li legend, fieldset fieldset legend {
+    font-size: 14px;
+}
+
+li .details {
+    padding: 10px;
+    margin-top: 10px;
+    border-top: 1px solid #d5d5d5;
+    border-bottom: 1px solid #d5d5d5;
+}
+
+.is-active:after {
+    display: block;
+    clear: both;
+    content: '';
+}
+
+.is-active label {
+    float: right;
+}
+
+li ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+li label, fieldset fieldset label {
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+li label input[type=radio], fieldset fieldset label input[type=radio] {
+    margin-left: 5px;
+}
+
+button.add {
+    margin-top: 15px;
+}
+
+li.item{
+    margin-bottom: 10px;
+    list-style-type: none;
+}
+
+li.deleted {
+    opacity: .6;
+}
+
+.form-control.password {
+    margin-bottom: 0;
+}
+
+.generate-password {
+    margin-top: 2px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: right;
+    cursor: pointer;
+}
+
+textarea {
+    width: 100% !important;
+    max-height: 200px;
+    min-height: 60px;
+}
+
+
+
+.profile-image-mini {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    display: inline-block;
+    margin-right: 5px;
+    background-size: cover;
+}
+.user-title{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}

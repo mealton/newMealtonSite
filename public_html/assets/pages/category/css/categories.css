@@ -1,0 +1,69 @@
+.categories-container {
+    padding: 50px 0;
+}
+
+.categories-container fieldset {
+    border-radius: 10px;
+    border: 1px solid #a7a7a7;
+    position: relative;
+    padding: 20px 20px 10px;
+    box-sizing: border-box;
+}
+
+.categories-container legend{
+    position: absolute;
+    left: 2%;
+    top: -10px;
+    line-height: 1;
+    font-weight: bold;
+    border:none;
+    padding: 0 10px;
+    background-color: #f2f2f2;
+    display: inline-block;
+    width:auto;
+    font-size: 18px;
+}
+
+.categories-container a{
+    color: #000;
+}
+
+.categories-container .heshtags{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.categories-container .tag-item {
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    display:inline-block;
+    width:auto;
+    margin:0 3px 10px;
+    text-align:center;
+    padding: 2px 5px;
+    color: #adadad;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+    -webkit-box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), inset 0 0 6px 0 rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), inset 0 0 6px 0 rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), inset 0 0 6px 0 rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.4);
+    background: #f6f6f6;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f6f6f6), to(#d4d4d4));
+    background: -webkit-linear-gradient(#f6f6f6, #d4d4d4);
+    background-image: -moz-linear-gradient(top, #f6f6f6, #d4d4d4);
+    background-image: -moz-gradient(top, #f6f6f6, #d4d4d4);
+    border: 1px solid #a1a1a1;
+}
+
+.categories-container .tag-item:hover {
+    background: #f6f6f6;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f6f6f6), to(#ececec));
+    background: -webkit-linear-gradient(#f6f6f6, #ececec);
+    background-image: -moz-linear-gradient(top, #f6f6f6, #ececec);
+    background-image: -moz-gradient(top, #f6f6f6, #ececec);
+}

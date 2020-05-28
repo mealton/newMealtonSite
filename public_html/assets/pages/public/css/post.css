@@ -1,0 +1,330 @@
+button, html [type="button"], [type="reset"], [type="submit"] {
+    -webkit-appearance: button;
+}
+
+.btn {
+    display: inline-block;
+    font-weight: normal;
+    line-height: 1.25;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+}
+
+.btn.btn-primary {
+    color: #fff;
+    background-color: #0275d8;
+    border-color: #0275d8;
+}
+
+.btn.btn-secondary {
+    color: #373a3c;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.btn.btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #5cb85c;
+}
+
+.btn.btn-info {
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #5bc0de;
+}
+
+.btn.btn-warning {
+    color: #fff;
+    background-color: #f0ad4e;
+    border-color: #f0ad4e;
+}
+
+.btn.btn-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d9534f;
+}
+
+.post img {
+    max-width: 500px;
+}
+
+.whole-publication img {
+    max-width: 100%;
+    margin-bottom: 30px;
+}
+
+.details:after, .footer:after {
+    display: block;
+    content: '';
+    clear: both;
+}
+
+.details .author, .footer .likes {
+    float: right;
+}
+
+.footer .btn {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.submit {
+    margin-top: 10px;
+    text-align: right;
+}
+
+.submit .media {
+    text-align: left;
+    width: 800px;
+    max-width: 100%;
+}
+
+.submit:after {
+    display: block;
+    content: '';
+    clear: both;
+}
+
+/*.likes {
+    cursor: pointer;
+}*/
+
+/*
+.likes:hover {
+    color: green;
+}
+*/
+
+.media {
+    float: left;
+}
+
+.upload-url {
+    width: calc(100% - 270px);
+    max-width: 100%;
+    float: left;
+    height: 34px;
+}
+
+.upload-url-btn {
+    margin: 0 5px 0 10px;
+}
+
+label {
+    margin: 0;
+}
+
+.comment-replies .comment-reply-btn {
+    display: none !important;
+}
+
+.preview {
+    margin-top: 15px;
+}
+
+img.comment-image {
+    max-width: 150px;
+    margin: 0 5px 5px 0;
+}
+
+.upload-url-btn, .upload-label {
+    position: relative;
+}
+
+.upload-url-btn img, .upload-label img {
+    width: 30px;
+    position: absolute;
+    left: calc(50% - 30px / 2);
+    top: calc(50% - 30px / 2);
+    display: none;
+}
+
+.upload-label img {
+    top: calc(50% - 48px / 2);
+}
+
+.upload-url-btn.loader img, .upload-label.loader img {
+    display: block;
+}
+
+div.comment-image {
+    position: relative;
+    max-width: 100px;
+    margin: 0 5px 5px 0;
+    display: inline-block;
+}
+
+div.comment-image:after {
+    display: flex;
+    content: "";
+    font-size: 14px;
+    box-sizing: border-box;
+    padding: 5px;
+    font-weight: bold;
+    color: #FFF;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+div.comment-image:hover:after {
+    background-color: rgba(255, 0, 0, .4);
+    content: "Удалить";
+}
+
+div.comment-image .fa-window-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    color: red;
+}
+
+div.comment-image img.comment-image {
+    max-width: 100%;
+    margin: 0;
+}
+
+.panel .comment-replies {
+    cursor: zoom-in;
+}
+
+.modal-block {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, .7);
+    flex-wrap: wrap;
+    z-index: 99999999;
+}
+
+/* хром, сафари */
+.modal-block::-webkit-scrollbar {
+    width: 0;
+}
+
+/* ie 10+ */
+.modal-block {
+    -ms-overflow-style: none;
+}
+
+/* фф (свойство больше не работает, других способов тоже нет)*/
+.modal-block {
+    overflow: -moz-scrollbars-none;
+}
+
+/* хром, сафари */
+.modal-block > div::-webkit-scrollbar {
+    width: 0;
+}
+
+/* ie 10+ */
+.modal-block > div {
+    -ms-overflow-style: none;
+}
+
+/* фф (свойство больше не работает, других способов тоже нет)*/
+.modal-block > div {
+    overflow: -moz-scrollbars-none;
+}
+
+.modal-block > div {
+    text-align: center;
+    max-height: 100%;
+    overflow: auto;
+    padding: 50px 10px;
+}
+
+.modal-block img {
+    margin: auto;
+    max-width: 1000px;
+    max-height: 100%;
+}
+
+.modal-block p {
+    color: #FFF;
+    font-size: 22px;
+}
+
+.plyr {
+    max-width: 800px;
+    margin-bottom: 15px;
+}
+
+.public-subtitle{
+    margin-bottom: 30px;
+}
+
+.likes{
+    /**
+            * Для эксплорера
+            */
+    -ms-user-select: none;
+
+    /**
+     * Для мозилы
+     */
+    -moz-user-select: none;
+
+    /**
+     * Для конкверора
+     */
+    -khtml-user-select: none;
+
+    /**
+     * Для Сафари и Хрома
+     */
+    -webkit-user-select: none;
+}
+
+.likes .fa{
+    font-size: 26px;
+    cursor: pointer;
+}
+
+#likes-counter{
+    line-height: 1;
+    margin: 0 15px;
+    height: 26px;
+    font-size: 18px;
+    position: relative;
+    top: -5px;
+    font-weight: bold;
+}
+
+@media screen and (min-width: 300px) and (max-width: 599px) {
+    /*MOBILE*/
+    .whole-publication img {
+        max-width: 100%;
+    }
+}
+
+
+
+

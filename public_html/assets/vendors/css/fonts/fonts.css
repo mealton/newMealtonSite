@@ -1,0 +1,51 @@
+@font-face {
+    font-family: "LatoLight";
+    src: url("LatoLight.ttf");
+    font-style: normal;
+    font-weight: 300; }
+@font-face {
+    font-family: "LatoRegular";
+    src: url("LatoRegular.ttf");
+    font-style: normal;
+    font-weight: 400; }
+@font-face {
+    font-family: "LatoMedium";
+    src: url("LatoMedium.ttf");
+    font-style: normal;
+    font-weight: 500; }
+@font-face {
+    font-family: "LatoBold";
+    src: url("LatoBold.ttf");
+    font-style: normal;
+    font-weight: 600; }
+@font-face {
+    font-family: "LatoBlack";
+    src: url("LatoBlack.ttf");
+    font-style: normal;
+    font-weight: 900; }
+
+@font-face {
+    font-family: "Raleway-Light";
+    src: url("Raleway-Light.ttf");
+    font-style: normal;
+    font-weight: 300; }
+@font-face {
+    font-family: "Raleway-Regular";
+    src: url("Raleway-Regular.ttf");
+    font-style: normal;
+    font-weight: 400; }
+@font-face {
+    font-family: "Raleway-Medium";
+    src: url("Raleway-Medium.ttf");
+    font-style: normal;
+    font-weight: 500; }
+@font-face {
+    font-family: "Raleway-Bold";
+    src: url("Raleway-Bold.ttf");
+    font-style: normal;
+    font-weight: 600; }
+@font-face {
+    font-family: "Raleway-Black";
+    src: url("Raleway-Black.ttf");
+    font-style: normal;
+    font-weight: 900; }

@@ -1,0 +1,485 @@
+fieldset {
+    width: 500px;
+    max-width: 100%;
+    margin: 30px 0 0 0;
+    padding: 10px 10px 15px;
+    border: 1px solid #c0bcbc;
+    border-radius: 15px;
+}
+
+fieldset legend {
+    padding: 0 10px;
+    font-size: 16px;
+    display: inline-block;
+    width: auto;
+    border: none;
+    font-weight: bold;
+    margin: 0;
+}
+
+fieldset input {
+    margin-bottom: 10px;
+}
+
+#f {
+    margin-top: 50px;
+}
+
+fieldset fieldset {
+    margin: 0;
+}
+
+ul.userlist {
+    margin-bottom: 15px;
+    max-height: 500px;
+    overflow: auto;
+}
+
+ul.userlist::-webkit-scrollbar {
+    width: 5px;
+}
+
+ul.userlist::-webkit-scrollbar-track {
+    background: #f7efef;
+    border-radius: 5px;
+}
+
+ul.userlist::-webkit-scrollbar-thumb {
+    background: #dcd9d9;
+    border-radius: 4px;
+}
+
+li legend, fieldset fieldset legend {
+    font-size: 14px;
+}
+
+li .details {
+    padding: 10px;
+    margin-top: 10px;
+    border-top: 1px solid #d5d5d5;
+    border-bottom: 1px solid #d5d5d5;
+}
+
+.is-active:after {
+    display: block;
+    clear: both;
+    content: '';
+}
+
+.is-active label {
+    float: right;
+}
+
+li ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+li label, fieldset fieldset label {
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+li label input[type=radio], fieldset fieldset label input[type=radio] {
+    margin-left: 5px;
+}
+
+button.add {
+    margin-top: 15px;
+}
+
+li.item {
+    margin-bottom: 5px;
+}
+
+li.deleted {
+    opacity: .6;
+}
+
+.form-control.password {
+    margin-bottom: 0;
+}
+
+.generate-password {
+    margin-top: 2px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: right;
+    cursor: pointer;
+}
+
+textarea {
+    width: 100% !important;
+    max-height: 200px;
+    min-height: 60px;
+}
+
+.media {
+    float: left;
+}
+
+.upload-url {
+    width: calc(100% - 270px);
+    max-width: 100%;
+    float: left;
+    height: 34px;
+}
+
+.upload-url-btn {
+    margin: 0 5px 0 10px;
+}
+
+.upload-url-btn, .upload-label, .import-public {
+    position: relative;
+}
+
+.upload-url-btn img, .upload-label img, .import-public img {
+    width: 30px;
+    position: absolute;
+    left: calc(50% - 30px / 2);
+    top: calc(50% - 30px / 2);
+    display: none;
+}
+
+.upload-label img {
+    top: calc(50% - 48px / 2);
+}
+
+.upload-url-btn.loader img, .upload-label.loader img, .import-public.loader img {
+    display: block;
+}
+
+div.uploaded-image {
+    position: relative;
+    max-width: 200px;
+}
+
+div.uploaded-image img {
+    max-width: 100%;
+}
+
+div.uploaded-image:after {
+    display: flex;
+    content: "";
+    font-size: 14px;
+    box-sizing: border-box;
+    padding: 5px;
+    font-weight: bold;
+    color: #FFF;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+div.uploaded-image:hover:after {
+    background-color: rgba(255, 0, 0, .4);
+    content: "Удалить";
+}
+
+div.uploaded-image .fa-window-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    color: red;
+}
+
+.profile-image-mini {
+    max-width: 30px;
+    border-radius: 100%;
+    display: inline;
+    margin-right: 5px;
+}
+
+.userdata {
+    padding: 50px 0;
+}
+
+.profile-image {
+    width: auto;
+    height: auto;
+    max-width: 500px;
+}
+
+li:after {
+    display: block;
+    content: '';
+    clear: both;
+}
+
+li .fa {
+    float: right;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+li .form-data {
+    padding: 15px 10px;
+    border: 1px solid #cbcbcb;
+    border-radius: 10px;
+    margin: 10px 0;
+    outline: none;
+}
+
+.preview {
+    margin-bottom: 10px;
+}
+
+.fields fieldset {
+    display: inline-block;
+    width: auto;
+    padding: 10px;
+    margin: 0;
+}
+
+.fields fieldset legend {
+    margin: auto;
+    font-size: 14px;
+}
+
+.fields fieldset .fa {
+    margin: 0 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.fields fieldset .disabled .fa {
+    cursor: inherit;
+}
+
+.fields fieldset .fa:hover {
+    color: #000;
+}
+
+.field-item fieldset {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 15px;
+}
+
+.field-item fieldset .upload-url {
+    max-width: calc(100% - 278px);
+}
+
+.field-item fieldset legend {
+    margin: 0;
+}
+
+.field-item fieldset input[name=video] {
+    display: inline-block;
+    width: calc(100% - 95px);
+}
+
+.field-item fieldset textarea {
+    margin-bottom: 10px;
+}
+
+.field-item .plyr {
+    max-width: 500px;
+    margin-bottom: 10px;
+}
+
+.field-item div.uploaded-image {
+    display: inline-block;
+    margin: 5px;
+}
+
+/*.fields-select, .fields-select legend {
+    background-color: #f2f2f2;
+    z-index: 99999999;
+}*/
+
+#publication {
+    padding: 60px 0 30px;
+}
+
+.edit-item {
+    padding: 20px 0;
+    position: relative;
+    border-bottom: 1px solid #b2b2b2;
+    margin-bottom: 15px;
+    text-align: justify;
+    background-color: #f2f2f2;
+    transition: all .5s ease-in-out;
+}
+
+.edit-item.slide-down {
+    margin-top: 100px;
+}
+
+.edit-item .fa {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.edit-item .fa.fa-pencil-square-o {
+    right: 40px;
+    font-size: 18px;
+    top: 16px;
+}
+
+.edit-item .fa.fa-checkbox {
+    right: 75px;
+    top: 14px;
+}
+
+.edit-item h3, .edit-item h6 {
+    font-size: inherit;
+}
+
+.edit-item .plyr, .edit-item img {
+    /*max-width: 300px;
+    max-height: 200px;*/
+    max-width: 60%;
+}
+
+.edit-item.over {
+    transition: all .6s ease-in-out;
+    padding-top: 200px;
+}
+
+.helper {
+    border-radius: 15px;
+    width: 300px;
+    background-color: #56dfff;
+    font-size: 18px;
+    text-align: center;
+    padding: 20px;
+    color: #000;
+}
+
+.fa.fa-upload {
+    position: static;
+}
+
+.edit-item.smaller {
+    transition: all .6s ease-in-out;
+    transform: scale(.7);
+}
+
+.import-input {
+    display: inline-block;
+    width: calc(100% - 125px);
+}
+
+pre {
+    margin-top: 20px;
+}
+
+p.field-select {
+    text-align: right;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.field-select select {
+    display: inline-block;
+    width: auto;
+    font-size: 14px;
+    margin-left: 10px;
+    padding: 3px;
+    height: auto;
+}
+
+.controls .fa, .controls select {
+    position: static;
+    display: inline-block;
+    width: auto;
+}
+
+.controls .fa {
+    margin: 10px 0 0 10px;
+}
+
+.controls {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+select[name=insert_after] {
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    font-size: 12px;
+    border: 1px solid #f2f2f2;
+    background-color: transparent;
+}
+
+.controls fieldset {
+    width: 100%;
+    max-width: 100%;
+}
+
+.controls .flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.controls .align, .controls .font-size, .controls .font-style {
+    padding: 5px;
+    border: 1px solid #bebebe;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.controls .flex input {
+    margin: 0;
+    line-height: 1;
+}
+
+.preview-publication {
+    margin: 0 10px;
+}
+
+.user-public-item fieldset {
+    margin: 0;
+    width: calc(100% - 300px - 15px);
+}
+
+.user-public-item img {
+    margin-right: 15px;
+}
+
+.user-public-item p {
+    margin-bottom: 10px;
+}
+
+p.edit-publication {
+    text-align: right;
+}
+
+.clearfix:after {
+    display: block;
+    content: '';
+    clear: both;
+}
+
+.user-public-item.deleted img, .user-public-item.deleted h4, .user-public-item.deleted h6, .user-public-item.deleted p:not(.edit-publication) {
+    opacity: .5;
+}
+
+li.save-changes-label {
+    padding: 15px;
+    margin: 0;
+    background-color: green;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.set-to-all-text-fields legend{
+    text-align: left !important;
+    margin: 0 !important;
+}

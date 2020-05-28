@@ -1,0 +1,34 @@
+@media screen and (max-width: 1000px) {
+    .col-lg-8 h1{
+        font-size: 5.5rem !important;
+    }
+
+    .lift:before{
+        font-size: 150% !important;
+    }
+}
+
+
+
+
+@media screen and (max-width: 599px) {
+
+    .col-lg-8 h1{
+        font-size: 4rem !important;
+    }
+
+    .lift:before{
+        font-size: 100% !important;
+    }
+
+    .category-container ul{
+        position: static;
+        background-color: transparent;
+    }
+
+    .public-item *{
+        font-size: 16px !important;
+        line-height: 1.4 !important;
+    }
+}
+
