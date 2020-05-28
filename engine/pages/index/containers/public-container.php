@@ -7,15 +7,6 @@
  */
 
 ?>
-<div class="search container">
-    <form action="" onsubmit="location.href='/find/' + this.elements['search'].value; return false;" id="search-form">
-        <div class="search-container">
-            <input type="text" name="search" placeholder="Что будем искать?" class="form-control search-input">
-            <div id="search-options"></div>
-        </div>
-        <button type="submit" class="btn btn-primary">Найти</button>
-    </form>
-</div>
 <div class="container" id="publications-container">
-    <?= $html ?>
+    <?= $html ?  $html : '<h2>ничего не найдено</h2>'?>
 </div>

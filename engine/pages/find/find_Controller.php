@@ -6,7 +6,7 @@ class find_Controller extends main_Controller
 
     public function get_page($config, $query = array())
     {
-        $title = count($query) > 1 ? $query[1] : 'Результаты поиска';
+        $title = count($query) > 1 ? urldecode($query[1]) : 'Результаты поиска';
         $data = $this->executeModel($config, 'find', 'get_Content', $query);
 
         $pagination = array();
@@ -23,7 +23,7 @@ class find_Controller extends main_Controller
 
         $this->executeView('index', array(
             array('view' => 'get_title', 'data' => array('title' => $title, 'description' => 'Страничка пользователя'), 'container' => 'title'),
-            array('view' => 'publication', 'data' => $data, 'container' => 'public-container'),
+            array('view' => 'publication', 'data' => $data , 'container' => 'public-container'),
             array('view' => 'pagination', 'data' => count($pagination) > 1 ? $pagination : array(), 'container' => 'pagination')
         ));
     }

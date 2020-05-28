@@ -5,4 +5,6 @@
  */
 ?>
 
-<h1><?=$title?></h1>
+<div class="publication">
+    <h2><?=$title?></h2>
+</div>

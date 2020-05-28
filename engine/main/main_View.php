@@ -64,8 +64,14 @@
 <!-- Fixed navbar -->
 <?= main_Controller::$navigation ?>
 
-<!--Content-->
-<?= $content ?>
+<main class="main-container">
+    <!--Content-->
+    <div class="main-content">
+        <?= $content ?>
+    </div>
+    <!--Sidebar-->
+    <?= main_Controller::$sidebar ?>
+</main>
 
 <!-- FOOTER -->
 <div id="f">

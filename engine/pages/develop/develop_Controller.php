@@ -80,21 +80,21 @@ class develop_Controller extends main_Controller
             'view' => 'menu_option',
             'data' => $data
         ));
-        $navidation_html = $this->reRenderNav($config);
+        $navidation_html = $this->getNavigation($config, true);
         print_r(json_encode(array('result' => !empty($data), 'data' => $new_option, 'nav' => $navidation_html)));
     }
 
     protected function updateMenuOption($config, $data)
     {
         $data = $this->executeModel($config, 'develop', 'MenuManager', $data);
-        $navidation_html = $this->reRenderNav($config);
+        $navidation_html = $this->getNavigation($config, true);
         print_r(json_encode(array('result' => !empty($data), 'data' => $data, 'nav' => $navidation_html)));
     }
 
     protected function deleteMenuOption($config, $data)
     {
         $data = $this->executeModel($config, 'develop', 'MenuManager', $data);
-        $navidation_html = $this->reRenderNav($config);
+        $navidation_html = $this->getNavigation($config, true);
         print_r(json_encode(array('result' => !empty($data), 'data' => $data, 'nav' => $navidation_html)));
     }
 

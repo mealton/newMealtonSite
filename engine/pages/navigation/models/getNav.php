@@ -36,7 +36,9 @@ class getNav extends main_Model
                 'menu_option' => 'Категории',
                 'menu_option_url' => 'categories',
                 'categories' => db::getInstance()->Select($sql)
-            ));
+            ),
+            'options' => db::getInstance()->Select('SELECT * FROM `new_project_menu` WHERE `isActive` != "deleted"')
+        );
     }
 
 

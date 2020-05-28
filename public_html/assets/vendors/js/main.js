@@ -20,7 +20,7 @@ function ajax(url, type, data, callback, beforeSend, error) {
         success: function (response) {
             callback(response);
         },
-        error:function (response) {
+        error: function (response) {
             error(response);
         }
     });
@@ -204,10 +204,10 @@ const Upload = {
 const Session = {
     config: function (a) {
         let data = {
-            action:'sessionConfig',
-            content:a.getAttribute('data-content'),
-            id:a.getAttribute('data-id'),
-            menu:a.getAttribute('data-id'),
+            action: 'sessionConfig',
+            content: a.getAttribute('data-content'),
+            id: a.getAttribute('data-id'),
+            menu: a.getAttribute('data-id'),
         };
         let callback = function (response) {
             console.log(response);
@@ -217,22 +217,46 @@ const Session = {
     }
 };
 
-
 const Search = {
-    search:function (input) {
-        if(input.value.length < 2){
+
+    switchKeyboard: function (value) {
+
+        let values = {
+            q: 'й', w: 'ц', e: 'у', r: 'к', t: 'е', y: 'н', u: 'г', i: 'ш', o: 'щ', p: 'з', '[': 'х', ']': 'ъ', a: 'ф',
+            s: 'ы', d: 'в', f: 'а', g: 'п', h: 'р', j: 'о', k: 'л', l: 'д', ':': 'ж', '"': 'э', z: 'я', x: 'ч', c: 'с',
+            v: 'м', b: 'и', n: 'т', m: 'ь', ',': 'б', '.': 'ю', '/': '.'
+        };
+        let result = '';
+
+        value.split('').forEach(function (char) {
+            if (values[char] !== undefined) {
+                result += values[char];
+            } else {
+                result += char;
+            }
+        });
+        return result;
+    },
+
+    search: function (input) {
+        if (input.value.length < 2) {
             $('#search-options').html('');
+            $(input).closest('form').find('button[type="submit"]').prop('disabled', true);
             return false;
         }
 
+        $(input).closest('form').find('button[type="submit"]').prop('disabled', false);
         let data = {
             action: 'search',
             value: input.value
         };
+        let $this = this;
         let callback = function (response) {
             console.log(response);
             if (response.data.length > 0) {
                 $('#search-options').html(response.html);
+            } else {
+                input.value = $this.switchKeyboard(input.value);
             }
         };
         ajax(location.href, 'JSON', data, callback);
@@ -240,14 +264,57 @@ const Search = {
 };
 
 
+const Sidebar = {
+    offset: 5,
+    scroll: function (btn) {
+
+        let container = $('.sidebar-scroll-container-inner');
+
+        if ($(btn).hasClass('to-up')) {
+            $('.to-down').prop('disabled', false);
+            this.offset--;
+            container.animate({
+                top: parseInt(container.css('top')) + container.find('.sidebar-public').last().outerHeight() + 20
+            }, 500);
+            if (this.offset == 5) {
+                $('.to-up').prop('disabled', true);
+            }
+            return true;
+        }
+        else if (Sidebar.offset == sidebarOffsetMax - 1) {
+            $('.to-down').prop('disabled', true);
+        }
+
+        let data = {
+            action: 'scroll',
+            add: true,
+            offset: ++this.offset
+        };
+
+        let callback = function (response) {
+            console.log(response);
+            if ($(btn).hasClass('to-down')) {
+                $('.to-up').prop('disabled', false);
+                container.append(response.html);
+                let toUpDistance = parseInt(container.css('top')) - container.find('.sidebar-public').last().outerHeight() - 20;
+                container.animate({top: toUpDistance}, 500);
+            }
+        };
+
+        ajax(location.href, 'JSON', data, callback);
+
+    }
+};
+
+
 jQuery(document).ready(function ($) {
 
 
-    if(window.location.pathname != "/profile/"){
+    if (window.location.pathname != "/profile/") {
         localStorage.removeItem('active-tab');
     }
-    
-    if(window.location.pathname != "/index/"){
+
+    if (window.location.pathname != "/index/") {
         localStorage.removeItem('page');
     }
 
@@ -328,17 +395,19 @@ jQuery(document).ready(function ($) {
 
 
     //сессии
-   /* $('a.session-config').on('click', function () {
-        Session.config(this);
-        return false;
-    });*/
-
-
+    /* $('a.session-config').on('click', function () {
+     Session.config(this);
+     return false;
+     });*/
 
 
     $('.lift').on('click', function () {
-        if($(this).hasClass('lift-visible-animate'))
+        if ($(this).hasClass('lift-visible-animate'))
             $('html, body').animate({scrollTop: 0}, 1000);
+    });
+
+    $('.scroll-sidebar').on('click', function () {
+        Sidebar.scroll(this);
     });
 
 
@@ -352,8 +421,20 @@ jQuery(document).ready(function ($) {
             lift.addClass('lift-hidden-animate');
             lift.removeClass('lift-visible-animate');
         }
+    }).on('load', function () {
+        let inner = $('.sidebar-scroll-container-inner');
+        let height = inner.outerHeight()
+        $('.sidebar-scroll-container').css({
+            height: height
+        });
+        inner.css({
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            width: '100%',
+            height: '100%'
+        })
     });
-
 
 
     $('.search-input').on('keyup', function () {

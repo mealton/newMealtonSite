@@ -4,6 +4,17 @@
 class profile_Controller extends main_Controller
 {
 
+    public function __construct($config, $page)
+    {
+        session_start();
+
+        if(!$_SESSION['admin']){
+            header('Location:/');
+        }
+
+        parent::__construct($config, $page);
+    }
+
     public function get_page($config)
     {
         session_start();
