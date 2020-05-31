@@ -68,6 +68,7 @@ class get_Content extends main_Model
                     SET `views` = `views` + 1 
                       WHERE `id` = ' . $id;
         db::getInstance()->Query($sql);
+
         $sql = 'SELECT `posts`.*, `content`.*, `users`.`username`, `category`.`rubric_name`,
                   (SELECT COUNT(*) FROM `new_project_publications_content`
                     WHERE `publication_id` = ' . $id . ' AND `tag_category` = "image") as `count_img`,

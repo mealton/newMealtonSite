@@ -10,6 +10,10 @@
     box-sizing: border-box;
 }
 
+.categories-container fieldset li:hover{
+    text-decoration: underline;
+}
+
 .categories-container legend{
     position: absolute;
     left: 2%;

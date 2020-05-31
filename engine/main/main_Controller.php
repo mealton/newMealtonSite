@@ -11,6 +11,8 @@ class main_Controller
     public static $css;
     public static $js;
 
+    public static $categories_assoc;
+
     protected $userId;
 
     public function __construct($config, $page)
@@ -24,6 +26,10 @@ class main_Controller
             ));
         }
 
+        self::$categories_assoc = $this->executeModel($config, 'category', 'get_CategoryName');
+
+        //main_Model::pre(self::$categories_assoc);
+        
         if (!in_array($page, array('index')))
             unset($_SESSION['page']);
 
@@ -41,8 +47,8 @@ class main_Controller
             'data' => array()
         ));
 
-        $navigation['categories']['categories'] = $this->executeView('navigation', array(
-            array('view' => 'category_li', 'data' => $navigation['categories']['categories'], 'container' => 'categories_container')
+        $navigation['category']['categories'] = $this->executeView('navigation', array(
+            array('view' => 'category_li', 'data' => $navigation['category']['categories'], 'container' => 'categories_container')
         ), true);
 
         foreach ($navigation['options'] as $k => $v){

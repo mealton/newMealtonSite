@@ -240,7 +240,7 @@ const Search = {
 
     search: function (input) {
         if (input.value.length < 2) {
-            $('#search-options').html('');
+            $('#search-options').hide().html('');
             $(input).closest('form').find('button[type="submit"]').prop('disabled', true);
             return false;
         }
@@ -254,7 +254,7 @@ const Search = {
         let callback = function (response) {
             console.log(response);
             if (response.data.length > 0) {
-                $('#search-options').html(response.html);
+                $('#search-options').show().html(response.html);
             } else {
                 input.value = $this.switchKeyboard(input.value);
             }
@@ -290,6 +290,7 @@ const Sidebar = {
             add: true,
             offset: ++this.offset
         };
+
 
         let callback = function (response) {
             console.log(response);
@@ -423,7 +424,7 @@ jQuery(document).ready(function ($) {
         }
     }).on('load', function () {
         let inner = $('.sidebar-scroll-container-inner');
-        let height = inner.outerHeight()
+        let height = inner.outerHeight();
         $('.sidebar-scroll-container').css({
             height: height
         });
@@ -437,9 +438,14 @@ jQuery(document).ready(function ($) {
     });
 
 
-    $('.search-input').on('keyup', function () {
+    $('.search-input')
+        .on('keyup', function () {
+            Search.search(this);
+        }).bind('paste', function (e) {
+        this.value = (e.originalEvent || e).clipboardData.getData('text/plain');
         Search.search(this);
-    })
+        return false;
+    });
 
 
 });

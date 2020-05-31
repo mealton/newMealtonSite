@@ -731,6 +731,20 @@ const Profile = {
         ajax(location.href, 'JSON', data, callback, before);
     },
 
+    closeEdit: function (btn) {
+        let data = {
+            action: 'closeEdit'
+        };
+
+        let callback = function (response) {
+            console.log(response);
+            if(response.result){
+                window.location.href=btn.getAttribute('data-refer');
+            }
+        };
+        ajax(location.href, 'JSON', data, callback);
+    },
+
     isMouseDown:false
 
 };
@@ -883,6 +897,10 @@ $(document).ready(function () {
         Profile.multiRemove(this);
     });
 
+    $('.close-edit-publication').on('click', function () {
+        Profile.closeEdit(this);
+    });
+
     $('input[name="multi-remove"]').on('change', function () {
        let publicItem = $(this).closest('.edit-item');
         if(this.checked)
@@ -891,18 +909,12 @@ $(document).ready(function () {
             publicItem.removeClass('opacity-03');
     });
 
-
-
     $(window).on("mousedown", function(e) {
         Profile.isMouseDown = true;
     }).on("mousemove", function(e) {
-
-        console.log(e.target.tagName);
-
         if(Profile.isMouseDown && $(e.target).closest('.edit-item')[0] !== undefined && ["FIELDSET", "TEXTAREA", "INPUT", "SELECT", "I", "BUTTON"].indexOf(e.target.tagName) == -1){
             $(e.target).closest('.edit-item').addClass('opacity-03').find('input[name="multi-remove"]').prop('checked', true);
         }
-
     }).on("mouseup", function(e) {
         Profile.isMouseDown = false;
     })

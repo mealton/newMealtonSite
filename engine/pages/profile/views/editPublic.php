@@ -99,11 +99,12 @@
 
         <hr>
         <p class="clearfix">
+            <button type="button" class="btn btn-default float-left multi-remove-elements">Удалить выбранные элементы</button>
             <a href="/public/preview" data-content="post" data-id="-1" class="session-config float-right">
                 <button type="button" class="btn btn-default preview-publication">Предпросмотр</button>
             </a>
-            <button type="button" class="btn btn-primary update-publication float-right">Сохранить
-            </button>
+            <button type="button" class="btn btn-primary update-publication float-right">Сохранить</button>
+            <button type="button" class="btn btn-default close-edit-publication float-right" data-refer="<?=$_SERVER['HTTP_REFERER']?>" style="margin-right: 10px;">Закрыть</button>
 
         </p>
 

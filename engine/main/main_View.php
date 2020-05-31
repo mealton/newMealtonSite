@@ -14,9 +14,11 @@
     <meta charset="utf-8">
     <title><?=$title?></title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <meta name="keywords" content="Публикации, юмор, приколы, ретро, посты, Домашняя страничка Юрий Титова">
     <meta name="description" content="<?=$description?>">
+
+    <!--yandex web master-->
+    <meta name="yandex-verification" content="575fe42069bd1ed9" />
 
     <!--PLYR Video Player-->
     <script src="/assets/vendors/plyr/plyr.js"></script>

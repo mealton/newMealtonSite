@@ -41,20 +41,26 @@ class get_Content extends main_Model
 
     private function getUserPublications()
     {
+        $page = $this->arguments['page'];
+        $limit =  $this->limit;
+        $offset = $limit * ($page - 1);
+
         $sql = "SELECT *,
                   (SELECT `content` FROM `new_project_publications_content`
                     WHERE `publication_id` = `publics`.`id` AND `tag_category` = 'image'
-                      ORDER BY RAND() LIMIT 1) as `random_img`
-                   FROM `new_project_publications` as `publics`
-                      WHERE `user_id` = " . $this->arguments['userId'] .
-                        " ORDER BY `created_on` DESC 
-                                LIMIT 50";
+                      ORDER BY RAND() LIMIT 1) as `random_img`,
+                      (SELECT CEILING(COUNT(`id`)/$limit) FROM `new_project_publications` WHERE `status` != 'deleted' AND (`short_title` != '' OR `long_title` != '')) as `pages`
+                           FROM `new_project_publications` as `publics`
+                              WHERE `user_id` = " . $this->arguments['userId'] .
+                                " ORDER BY `created_on` DESC 
+                                        LIMIT " . $limit . " OFFSET " . $offset;
+        
         return db::getInstance()->Select($sql);
     }
 
     private function getPublic($id)
     {
-        $sql = 'SELECT `posts`.*, `posts`.`id` as `post_id`, `content`.*, `users`.`username`, `category`.`rubric_name`
+        $sql = 'SELECT `posts`.*, `posts`.`id` as `post_id`, `content`.*, `users`.`username`, `category`.`rubric_name`                  
                     FROM `new_project_publications` as `posts`
                       RIGHT JOIN `new_project_publications_content` as `content` ON `posts`.`id` = `content`.`publication_id`
                         RIGHT JOIN `new_project_users` as `users` ON `posts`.`user_id` = `users`.`id`

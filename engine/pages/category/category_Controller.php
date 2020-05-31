@@ -4,6 +4,8 @@
 class category_Controller extends main_Controller
 {
 
+    public static $category;
+
     public function get_page($config, $query = array())
     {
         session_start();
@@ -11,7 +13,7 @@ class category_Controller extends main_Controller
             $this->executeModel($config, 'category', 'get_Content', $query) :
             $this->executeModel($config, 'category', 'get_Categories', $query);
         $category = count($query) > 1 ? $data[0]['rubric_name'] : 'Все категории';
-        $_SESSION['category'] = $category;
+        $_SESSION['category'] = $category === 'Все категории' ? 'категория' : $category;
 
         if (count($query) > 1) {
 
@@ -28,7 +30,7 @@ class category_Controller extends main_Controller
             }
 
             $this->executeView('index', array(
-                array('view' => 'get_title', 'data' => array('title' => $category, 'description' => 'Страничка пользователя'), 'container' => 'title'),
+                array('view' => 'get_title', 'data' => array('title' => 'Категория: "' . addslashes($category) . '"', 'description' => 'Страничка пользователя'), 'container' => 'title'),
                 array('view' => 'publication', 'data' => $data, 'container' => 'public-container'),
                 array('view' => 'pagination', 'data' => count($pagination) > 1 ? $pagination : array(), 'container' => 'pagination')
             ));
@@ -61,7 +63,7 @@ class category_Controller extends main_Controller
 
             $tags = $this->executeModel($config, 'category', 'get_Tags', $query);
             $tags_html = array(
-                'category' => 'Хэштеги',
+                'category' => 'Хэштеги<span id="hashtags"></span>',
                 'category_alias' => '',
                 'publics' => ''
             );

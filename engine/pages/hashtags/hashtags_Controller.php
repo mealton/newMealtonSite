@@ -24,7 +24,7 @@ class hashtags_Controller extends main_Controller
         }
 
         $this->executeView('index', array(
-            array('view' => 'get_title', 'data' => array('title' => $hashtag, 'description' => 'Страничка пользователя'), 'container' => 'title'),
+            array('view' => 'get_title', 'data' => array('title' => '#' . $hashtag, 'description' => 'Страничка пользователя'), 'container' => 'title'),
             array('view' => 'publication', 'data' => $data, 'container' => 'public-container'),
             array('view' => 'pagination', 'data' => count($pagination) > 1 ? $pagination : array(), 'container' => 'pagination')
         ));

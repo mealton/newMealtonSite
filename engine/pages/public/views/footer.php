@@ -41,6 +41,8 @@ session_start();
     </a>
 <?php endif; ?>
 <hr>
+<div class="neighbors-publics"><?=$prev_next_html?></div>
+<hr>
 <div class="comment-form">
     <form action="" id="comment-form">
         <div class="textarea">

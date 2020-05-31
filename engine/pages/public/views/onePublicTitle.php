@@ -17,6 +17,8 @@ session_start();
                 <?php /*//main_Model::pre($_GET['query'])*/?>
                 <?php /*//main_Model::pre($_SESSION['config'])*/?>
             </p>-->
+            <div class="neighbors-publics"><?=$prev_next_html?></div>
+            <hr>
             <h1><?= $long_title ?> <?= main_Controller::mediaCounter($count_img, $count_video) ?></h1>
             <hr>
             <p>

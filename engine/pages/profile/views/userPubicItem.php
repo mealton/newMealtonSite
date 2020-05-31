@@ -8,7 +8,7 @@
 ?>
 
 
-<div class="user-public-item <?= $status == 'deleted' ? 'deleted' : '' ?>">
+<div class="user-public-item <?= $status == 'deleted' ? 'deleted' : '' ?>" id="public-item-<?=$id?>">
         <div class="clearfix">
             <img
                 src="<?= $image_default ? str_replace('fullsize', 'preview', $image_default) : str_replace('fullsize', 'preview', $random_img) ?>"

@@ -95,7 +95,7 @@ abstract class main_Model
 
     public static function getTagsString($tags)
     {
-        $string = strpos($_GET['query'], 'tags/') ?  '<a href="/" class="tag-link">очистить</a>&nbsp;' : '';
+        $string = strpos($_GET['query'], 'tags/') ?  '<a href="/category#hashtags" class="tag-link">все теги</a>&nbsp;' : '';
         foreach (explode(",", $tags) as $tag){
                 if(trim($tag)){
                     if(in_array(trim(mb_strtolower($tag)), explode('/', $_GET['query']))){

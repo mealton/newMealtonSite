@@ -7,7 +7,7 @@
 ?>
 
 <li class="<?= strval($_GET['page'] == $menu_option_url) ? 'active' : '' ?>">
-    <?php if ($menu_option_url !== 'categories'): ?>
+    <?php if ($menu_option_url !== 'category'): ?>
         <a <?= strval($_GET['page'] == $menu_option_url) ? '' : 'href="/' . $menu_option_url . '"' ?>
             data-content="index"
             data-menu=<?= $menu_option_url ?>

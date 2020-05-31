@@ -7,6 +7,16 @@ class public_Controller extends main_Controller
     public function get_page($config, $arguments = array())
     {
         session_start();
+        $refer = array_values(array_diff(explode('/', str_replace('http://' . $_SERVER['HTTP_HOST'], '', urldecode($_SERVER['HTTP_REFERER']))), array('')));
+
+        if($refer[0] != 'public'){
+            $_SESSION['condition'] = array(
+                'condition' => $refer[0],
+                'value' => $refer[1],
+            );
+        }
+
+        session_start();
         $alias = $arguments[1];
         $data = $alias == 'preview' ?
             $this->getSessionPublic() :
@@ -16,10 +26,31 @@ class public_Controller extends main_Controller
         $long_title = $data[0]['long_title'] ? $data[0]['long_title'] : $short_title;
         $description = $data[0]['description'] ? $data[0]['description'] : $long_title;
 
-        if(!strpos($_SERVER['HTTP_REFERER'], '/profile/'))
+        if (!strpos($_SERVER['HTTP_REFERER'], '/profile/'))
             $_SESSION['referer'] = $_SERVER['HTTP_REFERER'];
-        
-        //main_Model::pre($data);
+
+        $prev_next = $this->executeModel($config, 'public', 'get_Prev_Next_Public', array('id' => current(explode("::", $alias)), 'created_on' => $data[0]['created_on']));
+
+        $prev = $this->render('public', array(
+            'view' => 'prev',
+            'data' => $prev_next['prev']
+        ));
+        $next = $this->render('public', array(
+            'view' => 'next',
+            'data' => $prev_next['next']
+        ));
+
+        $prev_next_html = $this->render('public', array(
+            'view' => 'prev_next',
+            'data' => array(
+                array(
+                    'prev' => $prev,
+                    'next' => $next
+                )
+            )
+        ));
+
+        //main_Model::pre($prev_next_html);
 
         $this->executeView('public', array(
             array('view' => 'onePublicTitle',
@@ -30,10 +61,11 @@ class public_Controller extends main_Controller
                     'username' => $data[0]['username'],
                     'views' => $data[0]['views'],
                     'count_img' => $data[0]['count_img'],
-                    'count_video' => $data[0]['count_video']
+                    'count_video' => $data[0]['count_video'],
+                    'prev_next_html' => $prev_next_html
                 ),
                 'container' => 'onePublicTitle'),
-           // array('view' => 'get_publication_item', 'data' => $data, 'container' => 'publication'),
+            // array('view' => 'get_publication_item', 'data' => $data, 'container' => 'publication'),
             array('view' => 'switch_tag', 'data' => $data, 'container' => 'publication'),
             array('view' => 'footer', 'data' => array(
                 'dataFooter' => $dataFooter,
@@ -44,7 +76,8 @@ class public_Controller extends main_Controller
                 'dislikes' => $data[0]['dislikes'],
                 'import' => $data[0]['imported'],
                 'hashtags' => $data[0]['hashtags'],
-                'referer' => $_SESSION['referer']
+                'referer' => $_SESSION['referer'],
+                'prev_next_html' => $prev_next_html
             ), 'container' => 'footer'),
             //array('view' => 'comment', 'data' => $dataComments, 'container' => 'comments')
         ));
@@ -117,10 +150,11 @@ class public_Controller extends main_Controller
 
     }
 
-    protected function getSessionPublic(){
+    protected function getSessionPublic()
+    {
         session_start();
         $publication = array();
-        foreach ($_SESSION['publication']['fields'] as $field){
+        foreach ($_SESSION['publication']['fields'] as $field) {
             $publication[] = array(
                 'id' => $field['id'],
                 'category' => $_SESSION['publication']['category'],
@@ -147,24 +181,22 @@ class public_Controller extends main_Controller
     protected function like($config, $data)
     {
 
-        if( $data['to_do'] == 'like' && $_COOKIE['like-' . $data['id']] ||
-            $data['to_do'] == 'dislike' && $_COOKIE['dislike-' . $data['id']]){
+        if ($data['to_do'] == 'like' && $_COOKIE['like-' . $data['id']] ||
+            $data['to_do'] == 'dislike' && $_COOKIE['dislike-' . $data['id']]
+        ) {
             return false;
         }
 
-        if($data['to_do'] == 'like' && $_COOKIE['dislike-' . $data['id']]){
+        if ($data['to_do'] == 'like' && $_COOKIE['dislike-' . $data['id']]) {
             setcookie('dislike-' . $data['id'], true, time() - 30 * 24 * 3600, "/");
             $data['act'] = 'default_dislike';
-        }
-        elseif ($data['to_do'] == 'like' && !$_COOKIE['dislike-' . $data['id']]){
+        } elseif ($data['to_do'] == 'like' && !$_COOKIE['dislike-' . $data['id']]) {
             setcookie('like-' . $data['id'], true, time() + 30 * 24 * 3600, "/");
             $data['act'] = 'set_like';
-        }
-        elseif ($data['to_do'] == 'dislike' && $_COOKIE['like-' . $data['id']]){
+        } elseif ($data['to_do'] == 'dislike' && $_COOKIE['like-' . $data['id']]) {
             setcookie('like-' . $data['id'], true, time() - 30 * 24 * 3600, "/");
             $data['act'] = 'default_like';
-        }
-        elseif ($data['to_do'] == 'dislike' && !$_COOKIE['like-' . $data['id']]){
+        } elseif ($data['to_do'] == 'dislike' && !$_COOKIE['like-' . $data['id']]) {
             setcookie('dislike-' . $data['id'], true, time() + 30 * 24 * 3600, "/");
             $data['act'] = 'set_dislike';
         }
@@ -184,13 +216,13 @@ class public_Controller extends main_Controller
         $data = $this->executeModel($config, 'public', 'Comments', $data);
         $dataImages = $data[0]['images'];
 
-        if($dataImages){
+        if ($dataImages) {
             $images = $this->render('public', array(
                 'view' => 'comment_image',
                 'data' => $dataImages
             ));
             $data[0]['images'] = $images;
-        }else{
+        } else {
             $data[0]['images'] = '';
         }
 
@@ -211,13 +243,13 @@ class public_Controller extends main_Controller
     {
         $data = $this->executeModel($config, 'public', 'Comments', $data);
         $dataImages = $data[0]['images'];
-        if($dataImages){
+        if ($dataImages) {
             $images = $this->render('public', array(
                 'view' => 'comment_image',
                 'data' => $dataImages
             ));
             $data[0]['images'] = $images;
-        }else{
+        } else {
             $data[0]['images'] = '';
         }
         $html = $this->render('public', array(
@@ -228,6 +260,5 @@ class public_Controller extends main_Controller
         print_r(json_encode(array('result' => $result, 'comment' => $html, 'data' => $data)));
     }
 
-   
 
 }

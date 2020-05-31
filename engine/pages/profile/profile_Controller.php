@@ -15,7 +15,7 @@ class profile_Controller extends main_Controller
         parent::__construct($config, $page);
     }
 
-    public function get_page($config)
+    public function get_page($config, $query)
     {
         session_start();
         $arguments['userId'] = $_SESSION['userId'];
@@ -24,15 +24,19 @@ class profile_Controller extends main_Controller
 
         $showOne = false;
 
-        if ($query[1]) {
+        if ($query[1] && preg_match('/^\d+::/', $query[1])) {
             $id = current(explode('::', $query[1]));
             if (intval($id)) {
                 $showOne = true;
                 $arguments['publicId'] = $id;
             }
+        }else{
+            $arguments['page'] = intval($query[1]) ? intval($query[1]) : 1;
         }
 
         $data = $this->executeModel($config, 'profile', 'get_Content', $arguments);
+
+        //main_Model::pre($data);
 
         if ($showOne) {
 
@@ -117,9 +121,22 @@ class profile_Controller extends main_Controller
 
             $_SESSION['publication']['user_id'] = $_SESSION['userId'];
 
+            $pagination = array();
+            $pages = $data['getUserPublications'][0]['pages'];
+            $page = 1;
+            $current = count($query) > 1 ? $query[1] : 1;
+            while($page <= $pages){
+                $pagination[] = array(
+                    'page' => $page++,
+                    'current' => $current ? $current : 1,
+                    'content' => $query[0]
+                );
+            }
+            
             $this->executeView('profile', array(
                 array('view' => 'get_title', 'data' => array('title' => $title, 'description' => 'Страничка пользователя'), 'container' => 'title'),
-                array('view' => 'userdata', 'data' => $data['userdata'], 'container' => 'userdata')
+                array('view' => 'userdata', 'data' => $data['userdata'], 'container' => 'userdata'),
+                array('view' => 'pagination', 'data' => count($pagination) > 1 ? $pagination : array(), 'container' => 'pagination')
             ));
         }
 
@@ -425,6 +442,13 @@ class profile_Controller extends main_Controller
         ));
         $_SESSION['publication'] = array();
         print_r(json_encode(array('publication' => empty($_SESSION['publication']['fields']) ? "" : $publication)));
+    }
+
+    protected function closeEdit($config, $data)
+    {
+        session_start();
+        $_SESSION['publication'] = array();
+        print_r(json_encode(array('result' => empty($_SESSION['publication']) ? true : false)));
     }
 
 
