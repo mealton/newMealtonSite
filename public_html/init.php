@@ -12,7 +12,7 @@ $query = array_diff($query, array(0, null));
 
 
 $page = !empty($query) ? $query[0] : 'index';
-$_GET['page'] = $query[0];
+$_GET['page'] = $query[0] ? $query[0] : 'index';
 
 $controller = $page . '_Controller';
 $controller_path = __DIR__ . '/../engine/pages/' . $page . '/' . $controller . '.php';

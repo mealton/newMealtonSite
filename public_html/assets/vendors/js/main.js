@@ -266,6 +266,8 @@ const Search = {
 
 const Sidebar = {
     offset: 5,
+    step:0,
+    count:5,
     scroll: function (btn) {
 
         let container = $('.sidebar-scroll-container-inner');
@@ -273,10 +275,12 @@ const Sidebar = {
         if ($(btn).hasClass('to-up')) {
             $('.to-down').prop('disabled', false);
             this.offset--;
+            this.step++;
+            this.count--;
             container.animate({
-                top: parseInt(container.css('top')) + container.find('.sidebar-public').last().outerHeight() + 20
+                top: parseInt(container.css('top')) + container.find('.sidebar-public').first().outerHeight() + 20
             }, 500);
-            if (this.offset == 5) {
+            if (this.count == 5) {
                 $('.to-up').prop('disabled', true);
             }
             return true;
@@ -285,10 +289,12 @@ const Sidebar = {
             $('.to-down').prop('disabled', true);
         }
 
+        this.count++;
+
         let data = {
             action: 'scroll',
             add: true,
-            offset: ++this.offset
+            offset: ++this.offset + this.step
         };
 
 

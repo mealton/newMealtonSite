@@ -14,7 +14,7 @@
     <meta charset="utf-8">
     <title><?=$title?></title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta name="keywords" content="Публикации, юмор, приколы, ретро, посты, Домашняя страничка Юрий Титова">
+    <meta name="keywords" content="Публикации, юмор, приколы, ретро, посты, Домашняя страничка Юрий Титова, Мелтон, Mealton, mealton">
     <meta name="description" content="<?=$description?>">
 
     <!--yandex web master-->

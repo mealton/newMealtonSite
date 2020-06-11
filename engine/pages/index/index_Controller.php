@@ -16,7 +16,7 @@ class index_Controller extends main_Controller
             $pagination[] = array(
                 'page' => $page++,
                 'current' => $current,
-                'content' => $query[0]
+                'content' => $query[0] ? $query[0] : 'index'
             );
         }
 

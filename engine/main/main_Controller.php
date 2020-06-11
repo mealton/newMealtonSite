@@ -12,12 +12,17 @@ class main_Controller
     public static $js;
 
     public static $categories_assoc;
+    public static $current_public_category;
 
     protected $userId;
 
     public function __construct($config, $page)
     {
         session_start();
+        self::$current_public_category = $page == 'public' ?
+            $this->executeModel($config, 'category', 'get_CurrentCategoryName', intval(current(explode("::", explode("/", $_GET['query'])[1])))) :
+            false;
+        
         if ($_COOKIE['username'] && $_COOKIE['password'] && !$_SESSION['auth']) {
             $this->auth($config, array(
                 'username' => $_COOKIE['username'],

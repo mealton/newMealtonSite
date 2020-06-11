@@ -16,7 +16,6 @@ class public_Controller extends main_Controller
             );
         }
 
-        session_start();
         $alias = $arguments[1];
         $data = $alias == 'preview' ?
             $this->getSessionPublic() :
@@ -25,7 +24,7 @@ class public_Controller extends main_Controller
         $short_title = $data[0]['short_title'];
         $long_title = $data[0]['long_title'] ? $data[0]['long_title'] : $short_title;
         $description = $data[0]['description'] ? $data[0]['description'] : $long_title;
-
+        
         if (!strpos($_SERVER['HTTP_REFERER'], '/profile/'))
             $_SESSION['referer'] = $_SERVER['HTTP_REFERER'];
 

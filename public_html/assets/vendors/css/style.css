@@ -940,6 +940,11 @@ li.active .category-container > a {
     color: #FFF;
 }
 
+li.active .category-container > a:hover {
+    color: #fff;
+    background-color: #080808;
+}
+
 li.active .category-container > a .fa {
     color: #FFF;
 }
