@@ -33,7 +33,7 @@ class PublicUpdateManager extends main_Model
         $alias = addslashes($this->arguments['alias']);
         $image_default = addslashes($this->arguments['image_default']);
         $category = intval($this->arguments['category']);
-        $long_title = addslashes($this->arguments['long_title']);
+        $long_title = $this->arguments['long_title'] ? addslashes($this->arguments['long_title']) : $short_title;
         $description = addslashes($this->arguments['description']);
         $user_id = intval($this->arguments['user_id']);
 

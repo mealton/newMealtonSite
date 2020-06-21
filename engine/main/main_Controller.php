@@ -19,10 +19,13 @@ class main_Controller
     public function __construct($config, $page)
     {
         session_start();
-        self::$current_public_category = $page == 'public' ?
-            $this->executeModel($config, 'category', 'get_CurrentCategoryName', intval(current(explode("::", explode("/", $_GET['query'])[1])))) :
+
+        $public_id = intval(current(explode("::", explode("/", $_GET['query'])[1])));
+
+        self::$current_public_category = $page == 'public' && $public_id ?
+            $this->executeModel($config, 'category', 'get_CurrentCategoryName', $public_id) :
             false;
-        
+
         if ($_COOKIE['username'] && $_COOKIE['password'] && !$_SESSION['auth']) {
             $this->auth($config, array(
                 'username' => $_COOKIE['username'],
@@ -284,6 +287,13 @@ class main_Controller
         $russian_months = array('января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря');
         $date_parse = date_parse($date);
         return $date_parse['day'] . ' ' . $russian_months[$date_parse['month'] - 1] . ' ' . $date_parse['year'];
+    }
+
+    public static function dateTimeRusFormat($date)
+    {
+        $russian_months = array('января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря');
+        $date_parse = date_parse($date);
+        return $date_parse['day'] . ' ' . $russian_months[$date_parse['month'] - 1] . ' ' . $date_parse['year'] . ' в ' . $date_parse['hour'] . ':' . $date_parse['minute'];
     }
 
     public static function getEnding($number, $endings)

@@ -126,9 +126,17 @@ const Upload = {
 
         let formData = new FormData();
         let $this = this;
+        let size = 0;
 
-        if (input.files.length > 10) {
-            alert("Загружайте не более 10 картинок");
+        $(input.files).each(function (i, file) {
+            size += file.size;
+        });
+
+        //console.log(size);
+
+        if (size > 167772160) {
+            //alert("Загружайте не более 10 картинок");
+            alert("Превышен максимальный размер загружаемых файлов");
             return false;
         }
 

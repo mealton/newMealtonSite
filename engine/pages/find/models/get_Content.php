@@ -27,6 +27,7 @@ class get_Content extends main_Model
 
 
         $sql = "SELECT `publics`.*,`publics`.`id` as `public_id`, `users`.`username`, `users`.`profile_image`, `cat`.*,
+                  (SELECT COUNT(*) FROM `new_project_comments` WHERE `post_id` = `publics`.`id` AND `status` = 1) as `commentsCount`,
                   (SELECT COUNT(*) FROM `new_project_publications_content`
                     WHERE `publication_id` = `publics`.`id` AND `tag_category` = 'image') as `count_img`,
                   (SELECT COUNT(*) FROM `new_project_publications_content`

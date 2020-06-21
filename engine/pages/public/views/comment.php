@@ -19,30 +19,33 @@ $id = 'player' . rand(0, 1000);
             <div class="panel-body">
                 <div class="media-block">
                     <a class="media-left" href="#"><img class="img-circle img-sm" alt="Профиль пользователя"
-                                                        src="<?= $user_pic ? $user_pic : 'https://bootstraptema.ru/snippets/icons/2016/mia/1.png' ?>"></a>
+                                                        src="<?= $profile_image ? $profile_image : 'https://bootstraptema.ru/snippets/icons/2016/mia/1.png' ?>"></a>
                     <div class="media-body">
                         <div class="mar-btm">
                             <a href="#" class="btn-link text-semibold media-heading box-inline"><?= $username ?></a>
-                            <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> - <?= $com_date ?></p>
+                            <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> - <?= main_Controller::dateTimeRusFormat($date)  ?></p>
                         </div>
-                        <p><?= $com_text ?></p>
-                       <?php if($video):?>
-                           <div class="comment-video" id="<?=++$id?>" data-plyr-provider="youtube" data-plyr-embed-id="<?= end(explode("/", $video)); ?>"></div>
-                        <?php endif;?>
-                        <?= $images ?>
+                        <p><?= $comment ?></p>
+                        <?php if ($video): ?>
+                            <div class="comment-video" id="<?= ++$id ?>" data-plyr-provider="youtube"
+                                 data-plyr-embed-id="<?= end(explode("/", $video)); ?>"></div>
+                        <?php endif; ?>
+                        <?= $img ?>
                         <div class="pad-ver">
                             <div class="btn-group" data-id="<?= $id ?>">
-                                <a class="btn btn-sm btn-default btn-hover-success comment-like" href="#"><i
+                                <a class="btn btn-sm btn-default btn-hover-success comment-like" href="#"
+                                   data-id="<?= $c_id ?>" data-post-id="<?= $post_id ?>"><i
                                         class="fa fa-thumbs-up"></i> <span
                                         class="likes-counter"><?= $likes ?></span></a>
-                                <a class="btn btn-sm btn-default btn-hover-danger comment-like" href="#"><i
+                                <a class="btn btn-sm btn-default btn-hover-danger comment-like" href="#"
+                                   data-id="<?= $c_id ?>" data-post-id="<?= $post_id ?>"><i
                                         class="fa fa-thumbs-down"></i> <span
                                         class="likes-counter"><?= $dislikes ?></span></a>
                             </div>
                             <a class="btn btn-sm btn-default btn-hover-primary comment-reply-btn" href="#"
-                               data-id="<?= $id ?>">Ответить</a>
+                               data-id="<?= $c_id ?>">Ответить</a>
                         </div>
-                        <div class="comment-reply" data-id="<?= $id ?>"></div>
+                        <div class="comment-reply" data-id="<?= $c_id ?>"></div>
                         <div class="comment-replies"><?= $replies ?></div>
                         <hr>
                     </div>
@@ -52,6 +55,7 @@ $id = 'player' . rand(0, 1000);
         </div>
     </div>
     <script>
-        const <?=$id?> = new Plyr('#<?=$id?>');
+        const <?=$id?> =
+        new Plyr('#<?=$id?>');
     </script>
 </div>

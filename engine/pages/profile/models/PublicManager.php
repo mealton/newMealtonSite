@@ -33,13 +33,15 @@ class PublicManager extends main_Model
         $alias = addslashes($this->arguments['alias']);
         $image_default = addslashes($this->arguments['image_default']);
         $category = intval($this->arguments['category']) ? intval($this->arguments['category']) : 1;
-        $long_title = addslashes($this->arguments['long_title']);
+        $long_title = $this->arguments['long_title'] ? addslashes($this->arguments['long_title']) : $short_title;
         $description = addslashes($this->arguments['description']);
         $user_id = intval($this->arguments['user_id']);
 
         $hashtags =  addslashes($this->arguments['hashtags']);
         $imported =  addslashes($this->arguments['imported']);
         $token = rand(0, 10000);
+
+        $long_title = $long_title ? $long_title : $short_title;
 
         $sql = 'INSERT INTO `new_project_publications` 
                   (`alias`,`category`,`short_title`,`long_title`,`image_default`,`description`,`user_id`,`hashtags`,`imported`,`token`)

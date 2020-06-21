@@ -49,7 +49,12 @@ class public_Controller extends main_Controller
             )
         ));
 
-        //main_Model::pre($prev_next_html);
+        $comments = $this->executeModel($config, 'public', 'Comments', array('post_id' => $data[0]['publication_id'], 'action' => 'get'));
+
+
+        $data[0]['comments'] =  $this->commentsHTML($comments);
+
+        //main_Model::pre($comments);
 
         $this->executeView('public', array(
             array('view' => 'onePublicTitle',
@@ -69,6 +74,7 @@ class public_Controller extends main_Controller
             array('view' => 'footer', 'data' => array(
                 'dataFooter' => $dataFooter,
                 'username' => $data[0]['username'],
+                'profile_image' => $data[0]['profile_image'],
                 'publication_id' => $data[0]['publication_id'],
                 'alias' => $data[0]['alias'],
                 'likes' => $data[0]['likes'],
@@ -76,7 +82,9 @@ class public_Controller extends main_Controller
                 'import' => $data[0]['imported'],
                 'hashtags' => $data[0]['hashtags'],
                 'referer' => $_SESSION['referer'],
-                'prev_next_html' => $prev_next_html
+                'user_id' => $_SESSION['userId'],
+                'prev_next_html' => $prev_next_html,
+                'comments' => $data[0]['comments']
             ), 'container' => 'footer'),
             //array('view' => 'comment', 'data' => $dataComments, 'container' => 'comments')
         ));
@@ -149,6 +157,47 @@ class public_Controller extends main_Controller
 
     }
 
+    private function commentsHTML($comments)
+    {
+        if(!is_array($comments) || empty($comments))
+            return '';
+
+        foreach ($comments as $key => $comment){
+            if(!empty($comment['img'])){
+                $comments[$key]['img'] = $this->render('public', array(
+                    'view' => 'comment_image',
+                    'data' => $comment['img']
+                ));
+            }else{
+                $comments[$key]['img'] = '';
+            }
+            if(!empty($comment['replies'])){
+
+                foreach ($comment['replies'] as $i => $reply){
+                    if(!empty($reply['img'])){
+                        $comments[$key]['replies'][$i]['img'] = $this->render('public', array(
+                            'view' => 'comment_image',
+                            'data' => $reply['img']
+                        ));
+                    }else{
+                        $comments[$key]['replies'][$i]['img'] = '';
+                    }
+                }
+
+                $comments[$key]['replies'] = '<div class="replies">' . $this->render('public', array(
+                        'view' => 'comment',
+                        'data' => $comments[$key]['replies']
+                    )) . '</div>';
+            }
+        }
+
+        return $this->render('public', array(
+            'view' => 'comment',
+            'data' => $comments
+        ));
+
+    }
+
     protected function getSessionPublic()
     {
         session_start();
@@ -211,31 +260,68 @@ class public_Controller extends main_Controller
 
     protected function comment($config, $data)
     {
+
         $arguments = $data;
-        $data = $this->executeModel($config, 'public', 'Comments', $data);
-        $dataImages = $data[0]['images'];
+        $data = $this->executeModel($config, 'public', 'Comments', $data['comment']);
 
-        if ($dataImages) {
-            $images = $this->render('public', array(
-                'view' => 'comment_image',
-                'data' => $dataImages
-            ));
-            $data[0]['images'] = $images;
-        } else {
-            $data[0]['images'] = '';
-        }
+        /*if(is_array($data)){
+            foreach ($data as $key => $comment){
+                if(!empty($comment['img'])){
+                    $data[$key]['img'] = $this->render('public', array(
+                        'view' => 'comment_image',
+                        'data' => $comment['img']
+                    ));
+                }else{
+                    $comments[$key]['img'] = '';
+                }
+                if(!empty($comment['replies'])){
+                    $data[$key]['replies'] = '<div class="replies">' . $this->render('public', array(
+                            'view' => 'comment',
+                            'data' => $comment['replies']
+                        )) . '</div>';
+                }
+            }
+        }*/
 
-        $html = $this->render('public', array(
+        /*$html = $this->render('public', array(
             'view' => 'comment',
             'data' => $data
-        ));
+        ));*/
+
+        $html = $this->commentsHTML($data);
         $result = !empty($data[0]) ? 'true' : 'false';
+
         print_r(json_encode(array('result' => $result, 'comment' => $html, 'data' => $data, 'arguments' => $arguments)));
     }
 
     protected function commentLike($config, $data)
     {
-        print_r(json_encode($this->executeModel($config, 'public', 'CommentLike', $data)));
+        if(($data['likeDislike'] == 'likes' && $_COOKIE['com-like-' . $data['id']]) ||
+            ($data['likeDislike'] == 'dislikes' && $_COOKIE['com-dislike-' . $data['id']])  ){
+            print_r(json_encode(array('result' => 'false')));
+            return false;
+        }
+
+        if ($data['likeDislike'] == 'likes' && $_COOKIE['com-dislike-' . $data['id']]) {
+            setcookie('com-dislike-' . $data['id'], true, time() - 30 * 24 * 3600, "/");
+            $data['act'] = 'default_dislike';
+        } elseif ($data['likeDislike'] == 'likes' && !$_COOKIE['com-dislike-' . $data['id']]) {
+            setcookie('com-like-' . $data['id'], true, time() + 30 * 24 * 3600, "/");
+            $data['act'] = 'set_like';
+        } elseif ($data['likeDislike'] == 'dislikes' && $_COOKIE['com-like-' . $data['id']]) {
+            setcookie('com-like-' . $data['id'], true, time() - 30 * 24 * 3600, "/");
+            $data['act'] = 'default_like';
+        } elseif ($data['likeDislike'] == 'dislikes' && !$_COOKIE['com-like-' . $data['id']]) {
+            setcookie('com-dislike-' . $data['id'], true, time() + 30 * 24 * 3600, "/");
+            $data['act'] = 'set_dislike';
+        }
+
+        $this->executeModel($config, 'public', 'CommentLike', $data);
+        $data = $this->executeModel($config, 'public', 'Comments', array('action' => 'get', 'post_id' => $data['post_id']));
+        $result = !empty($data[0]) ? 'true' : 'false';
+        $html = $this->commentsHTML($data);
+        print_r(json_encode(array('result' => $result, 'comment' => $html, 'data' => $data)));
+        return true;
     }
 
     protected function commentReply($config, $data)

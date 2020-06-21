@@ -43,6 +43,7 @@
             <i class="fa fa-thumbs-o-up"></i>&nbsp;&nbsp;<?= $likes ?><br/>
             <i class="fa fa-eye"></i>&nbsp;&nbsp;<?= $views ?><br/>
             <i class="fa fa-calendar"></i>&nbsp;&nbsp;<?= main_Controller::dateRusFormat($created_on) ?><br/>
+            <a href="/public/<?= $public_id ?>::<?= $alias ?>#comments" style="color: inherit" title="<?= $commentsCount . ' ' . main_Controller::getEnding($commentsCount, array('комментарий','комментария','комментариев')) ?>"><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;&nbsp;<?=$commentsCount?></a><br>
             <?php if ($imported): ?>
                 <i class="fa fa-link"></i>&nbsp;&nbsp;<a href="<?= $imported ?>"
                                                          target="_blank"><?= main_Model::getImportLink($imported) ?></a>

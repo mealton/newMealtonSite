@@ -24,6 +24,7 @@ class get_Content extends main_Model
         $offset = $limit * ($page - 1);
         
         $sql = "SELECT `publics`.*,`publics`.`id` as `public_id`, `users`.`username`, `users`.`profile_image`, `cat`.*,
+                  (SELECT COUNT(*) FROM `new_project_comments` WHERE `post_id` = `publics`.`id` AND `status` = 1) as `commentsCount`,
                   (SELECT COUNT(*) FROM `new_project_publications_content`
                     WHERE `publication_id` = `publics`.`id` AND `tag_category` = 'image') as `count_img`,
                   (SELECT COUNT(*) FROM `new_project_publications_content`
@@ -36,7 +37,7 @@ class get_Content extends main_Model
                     LEFT JOIN  `new_project_users` as `users` ON `publics`.`user_id` = `users`.`id`
                       LEFT JOIN  `new_project_publications_rubrics` as `cat` ON `publics`.`category` = `cat`.`id`
                         WHERE `publics`.`status` != 'deleted' 
-                              AND `cat`.`rubric_url_name` != 'erotika'
+                              AND `publics`.`category` != 5
                             ORDER BY `publics`.`created_on` DESC LIMIT " . $limit . " OFFSET " . $offset;
 
         $this->data = db::getInstance()->Select($sql);

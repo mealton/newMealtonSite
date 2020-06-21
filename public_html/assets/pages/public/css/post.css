@@ -115,7 +115,7 @@ button, html [type="button"], [type="reset"], [type="submit"] {
     width: calc(100% - 270px);
     max-width: 100%;
     float: left;
-    height: 34px;
+    height: 29px;
 }
 
 .upload-url-btn {
@@ -135,7 +135,6 @@ label {
 }
 
 img.comment-image {
-    max-width: 150px;
     margin: 0 5px 5px 0;
 }
 
@@ -203,8 +202,12 @@ div.comment-image img.comment-image {
     margin: 0;
 }
 
-.panel .comment-replies {
+.comments-block img {
     cursor: zoom-in;
+}
+
+.modal-block img{
+    cursor: zoom-out;
 }
 
 .modal-block {
@@ -303,6 +306,12 @@ div.comment-image img.comment-image {
     -webkit-user-select: none;
 }
 
+.likes-container:after{
+    display: block;
+    content: '';
+    clear: both;
+}
+
 .likes .fa{
     font-size: 26px;
     cursor: pointer;
@@ -365,6 +374,16 @@ div.comment-image img.comment-image {
     right: -70px;
 }
 
+#comment-form{
+    width:calc(100% - 60px);
+    float: left;
+    margin-left: 10px;
+}
+#profile_image_comment{
+    float: left;
+    width: 50px;
+    height: 50px;
+}
 
 
 
@@ -372,6 +391,14 @@ div.comment-image img.comment-image {
     /*MOBILE*/
     .whole-publication img {
         max-width: 100%;
+    }
+
+    .neighbors-publics .preview{
+        display: none;
+    }
+
+    .neighbors-publics h4 a{
+        font-size: 14px;
     }
 }
 

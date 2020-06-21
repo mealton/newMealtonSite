@@ -19,7 +19,7 @@
             <div data-id='plyr-" . ++$i . "'></div>
             <div id='plyr" . $i . "' data-plyr-provider='youtube' data-plyr-embed-id='" . end(explode("/", $content)) . "'></div>
                     <script>
-                        const Plyr$i = new Plyr('#plyr$i');                        
+                        const Plyr$i = new Plyr('#plyr$i', {invertTime:false});                        
                         Plyr$i.on('play', function () {
                             document.title = \"" . addslashes(main_Controller::get_youtube_title(end(explode("/", $content)))) . "\";
                         })

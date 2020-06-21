@@ -132,11 +132,16 @@ class profile_Controller extends main_Controller
                     'content' => $query[0]
                 );
             }
+
+            $data['userdata'][0]['pagination'] = $this->render('profile', array(
+                'view' => 'pagination',
+                'data' => count($pagination) > 1 ? $pagination : array()
+            ));
             
             $this->executeView('profile', array(
                 array('view' => 'get_title', 'data' => array('title' => $title, 'description' => 'Страничка пользователя'), 'container' => 'title'),
                 array('view' => 'userdata', 'data' => $data['userdata'], 'container' => 'userdata'),
-                array('view' => 'pagination', 'data' => count($pagination) > 1 ? $pagination : array(), 'container' => 'pagination')
+                //array('view' => 'pagination', 'data' => count($pagination) > 1 ? $pagination : array(), 'container' => 'pagination')
             ));
         }
 
@@ -174,9 +179,7 @@ class profile_Controller extends main_Controller
 
         session_start();
 
-        if ($data['insertAfter']) {
-
-
+        if ($data['insertAfter'] && $data['insertAfter'] != "false") {
             if (is_array($data['value'])) {
                 foreach ($data['value'] as $value) {
                     array_splice(
@@ -206,8 +209,6 @@ class profile_Controller extends main_Controller
                     )
                 );
             }
-
-
         } else {
 
             if (is_array($data['value'])) {
@@ -232,7 +233,7 @@ class profile_Controller extends main_Controller
             'view' => 'publication_item',
             'data' => $_SESSION['publication']['fields']
         ));
-        print_r(json_encode(array('publication' => $publication)));
+        print_r(json_encode(array('publication' => $publication, 'data' => $data)));
     }
 
 

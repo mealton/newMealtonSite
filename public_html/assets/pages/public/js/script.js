@@ -5,7 +5,7 @@ const Public = {
         let data = {
             action: 'like',
             to_do: fa.getAttribute('data-like'),
-            id:fa.getAttribute('data-id')
+            id: fa.getAttribute('data-id')
         };
         let callback = function (response) {
             console.log(response);
@@ -22,49 +22,32 @@ const Public = {
         let data = {
             action: 'comment',
             comment: {
-                reply: '',
+                is_reply: 0,
+                is_replied: 0,
+                comment_id_reply: 0,
                 post_id: form.elements['post_id'].value,
-                username: form.elements['username'].value,
+                user_id: form.elements['user_id'].value,
                 comment: form.elements['comment'].value,
-                //pic:form.elements['image-url'].value
+                action: 'set',
                 images: this.commentImages
             }
         };
+
         let $this = this;
         let callback = function (response) {
             console.log(response);
             if (response.result === 'false')
                 return false;
 
-            let comments = $('.comments-block');
-            comments.prepend(response.comment);
-            let newCommentHeight = comments.find('.panel').first().outerHeight();
-            let addPictureBtn = $('.add-picture');
-            $('html, body').animate({scrollTop: $(window).scrollTop() + newCommentHeight}, 500);
+            $('.comments-block').html(response.comment);
+            $this.afterCommentInsert(form);
+            //let newCommentHeight = comments.find('.panel').first().outerHeight();
+            //let addPictureBtn = $('.add-picture');
+            //$('html, body').animate({scrollTop: $(window).scrollTop() + newCommentHeight}, 500);
             //$('.upload, .preview').addClass('hidden');
-            $('.preview').html('');
+            //$('.preview').html('');
             //addPictureBtn.show();
-            form.reset();
 
-            $('.comment-like').on('click', function () {
-                $this.commentLike(this);
-                return false;
-            });
-            $('.comment-reply-btn').on('click', function () {
-                $this.commentReplyForm(this);
-                return false;
-            });
-
-            addPictureBtn.on('click', function () {
-                $(this).hide();
-                $(this).closest('.media').find('.upload').removeClass('hidden');
-            });
-
-            $('.panel .comment-image').on('click', function () {
-                Public.showModalImg(this);
-            });
-
-            $this.commentImages = [];
         };
 
         let submitButton = $(form).find('button[type="submit"]');
@@ -77,20 +60,27 @@ const Public = {
             }, 2000);
             return false;
         }
+
+        //console.log(data);
         ajax(location.href, 'JSON', data, callback);
     },
 
     commentLike: function (button) {
         let data = {
             action: 'commentLike',
-            id: $(button).closest('.btn-group').attr('data-id'),
+            post_id: $(button).attr('data-post-id'),
+            id: $(button).attr('data-id'),
             likeDislike: $(button).hasClass('btn-hover-success') ? 'likes' : 'dislikes'
         };
+        let $this = this;
         let callback = function (response) {
             console.log(response);
-            if (!response[data.likeDislike])
+            if (response.result == 'false+')
                 return false;
-            $(button).find('span.likes-counter').text(response[data.likeDislike]);
+
+            $('.comments-block').html(response.comment);
+            $this.afterCommentInsert();
+            //$(button).find('span.likes-counter').text(response[data.likeDislike]);
         };
         ajax(location.href, 'JSON', data, callback);
     },
@@ -131,29 +121,64 @@ const Public = {
         return true;
     },
 
+    afterCommentInsert:function (form) {
+        if(form !== undefined)
+            form.reset();
+
+        let $this = this;
+
+        $('.preview').html('');
+
+        $('.comment-like').on('click', function () {
+            $this.commentLike(this);
+            return false;
+        });
+        $('.comment-reply-btn').on('click', function () {
+            $this.commentReplyForm(this);
+            return false;
+        });
+
+        $('.add-picture').on('click', function () {
+            $(this).hide();
+            $(this).closest('.media').find('.upload').removeClass('hidden');
+        });
+
+        $('.panel .comment-image').on('click', function () {
+            Public.showModalImg(this);
+        });
+
+        this.commentImages = [];
+    },
+
     commentReply: function (form) {
         let data = {
-            action: 'commentReply',
+            action: 'comment',
             comment: {
-                reply: true,
+                is_reply: 1,
+                is_replied: 0,
+                comment_id_reply: form.elements['comment_id'].value,
                 post_id: form.elements['post_id'].value,
-                comment_id: form.elements['comment_id'].value,
-                username: form.elements['username'].value,
+                user_id: form.elements['user_id'].value,
                 comment: form.elements['comment'].value,
+                action: 'set',
                 images: this.commentImages
             }
         };
+        let $this=  this;
         let callback = function (response) {
             console.log(response);
             if (response.result === 'false')
                 return false;
 
-            let comments = $(form).closest('.media-body').find('.comment-replies').first();
-            comments.prepend(response.comment);
-            let newCommentHeight = comments.find('.panel').first().outerHeight();
-            $('html, body').animate({scrollTop: $(window).scrollTop() + newCommentHeight}, 500);
-            form.remove();
-            $('.preview').html('');
+            $('.comments-block').html(response.comment);
+            $this.afterCommentInsert(form);
+
+            //let comments = $(form).closest('.media-body').find('.comment-replies').first();
+            //comments.prepend(response.comment);
+            //let newCommentHeight = comments.find('.panel').first().outerHeight();
+            //$('html, body').animate({scrollTop: $(window).scrollTop() + newCommentHeight}, 500);
+            //form.remove();
+            //$('.preview').html('');
 
             /*$('.comment-like').on('click', function () {
              Public.commentLike(this);
@@ -171,7 +196,7 @@ const Public = {
             }, 2000);
             return false;
         }
-        console.log(data);
+        //console.log(data);
         ajax(location.href, 'JSON', data, callback);
     },
 
@@ -208,7 +233,7 @@ const Public = {
         let before = function () {
             $(button).closest('.upload-url-btn').addClass('loader');
         };
-        ajax(location.href, 'JSON', data, callback, before);
+        ajax('/upload/', 'JSON', data, callback, before);
     },
 
     uploadFromComputer: function (input) {
@@ -355,7 +380,7 @@ $(document).ready(function () {
     $('.panel .comment-image').on('click', function () {
         Public.showModalImg(this);
     });
-    
+
     $('.image-item img').on('click', function () {
         Public.showModalImg(this, true);
     });

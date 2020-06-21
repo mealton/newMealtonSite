@@ -3,7 +3,11 @@
 session_start();
 
 ?>
-
+    <style>
+        /*.pagination{
+            display: none !important;
+        }*/
+    </style>
 
     <div class="fields">
         <div class="import">

@@ -18,6 +18,9 @@
         <div id="tabs-1">
             <h3>Мои публикации</h3>
             <?=$getUserPublications?>
+            <div class="container pagination align-content-center">
+                <?= $pagination ?>
+            </div>
         </div>
         <div id="tabs-2">
             <div class="new-publication">
