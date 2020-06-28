@@ -72,15 +72,13 @@ const Public = {
             id: $(button).attr('data-id'),
             likeDislike: $(button).hasClass('btn-hover-success') ? 'likes' : 'dislikes'
         };
-        let $this = this;
         let callback = function (response) {
             console.log(response);
-            if (response.result == 'false+')
-                return false;
 
-            $('.comments-block').html(response.comment);
-            $this.afterCommentInsert();
-            //$(button).find('span.likes-counter').text(response[data.likeDislike]);
+            let group = $(button).closest('.btn-group');
+
+            group.find('span.likes-counter').text(response.data.likes);
+            group.find('span.dislikes-counter').text(response.data.dislikes);
         };
         ajax(location.href, 'JSON', data, callback);
     },

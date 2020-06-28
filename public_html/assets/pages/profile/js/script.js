@@ -249,12 +249,12 @@ const Profile = {
             }
         }
 
-        if($(btn).hasClass('align-btn'))
+        if ($(btn).hasClass('align-btn'))
             container.find('.align-btn').removeClass('active');
 
-        if($(btn).hasClass('active')){
+        if ($(btn).hasClass('active')) {
             $(btn).removeClass('active');
-        }else{
+        } else {
             $(btn).addClass('active');
         }
 
@@ -621,7 +621,7 @@ const Profile = {
         });
         $('input[name="multi-remove"]').on('change', function () {
             let publicItem = $(this).closest('.edit-item');
-            if(this.checked)
+            if (this.checked)
                 publicItem.addClass('opacity-03');
             else
                 publicItem.removeClass('opacity-03');
@@ -709,18 +709,18 @@ const Profile = {
     test: function () {
         console.log('test');
     },
-    
+
     multiRemove: function (btn) {
         let data = {
             action: 'multiRemove',
-            ids:[]
+            ids: []
         };
         $('input[name="multi-remove"]:checked').each(function (i, el) {
             data.ids.push(el.value);
         });
         let $this = this;
         let before = function () {
-          $(btn).addClass('loader');
+            $(btn).addClass('loader');
         };
         let callback = function (response) {
             console.log(response);
@@ -738,14 +738,27 @@ const Profile = {
 
         let callback = function (response) {
             console.log(response);
-            if(response.result){
-                window.location.href=btn.getAttribute('data-refer');
+            if (response.result) {
+                window.location.href = btn.getAttribute('data-refer');
             }
         };
         ajax(location.href, 'JSON', data, callback);
     },
 
-    isMouseDown:false
+    isMouseDown: false,
+
+    hideImg: function (checkbox) {
+        let data = {
+            action: 'hideImg',
+            id: checkbox.getAttribute('data-id'),
+            isHidden: checkbox.checked ? 1 : 0
+        };
+
+        let callback = function (response) {
+            console.log(response);
+        };
+        ajax(location.href, 'JSON', data, callback);
+    }
 
 };
 
@@ -891,8 +904,8 @@ $(document).ready(function () {
     $('.cancel-publication').on('click', function () {
         Profile.cancelPublication(this);
     });
-    
-    
+
+
     $('.multi-remove-elements').on('click', function () {
         Profile.multiRemove(this);
     });
@@ -902,20 +915,24 @@ $(document).ready(function () {
     });
 
     $('input[name="multi-remove"]').on('change', function () {
-       let publicItem = $(this).closest('.edit-item');
-        if(this.checked)
+        let publicItem = $(this).closest('.edit-item');
+        if (this.checked)
             publicItem.addClass('opacity-03');
         else
             publicItem.removeClass('opacity-03');
     });
 
-    $(window).on("mousedown", function(e) {
+    $('input[name="isHidden"]').on('change', function () {
+        Profile.hideImg(this);
+    });
+
+    $(window).on("mousedown", function (e) {
         Profile.isMouseDown = true;
-    }).on("mousemove", function(e) {
-        if(Profile.isMouseDown && $(e.target).closest('.edit-item')[0] !== undefined && ["FIELDSET", "TEXTAREA", "INPUT", "SELECT", "I", "BUTTON"].indexOf(e.target.tagName) == -1){
+    }).on("mousemove", function (e) {
+        if (Profile.isMouseDown && $(e.target).closest('.edit-item')[0] !== undefined && ["FIELDSET", "TEXTAREA", "INPUT", "SELECT", "I", "BUTTON"].indexOf(e.target.tagName) == -1) {
             $(e.target).closest('.edit-item').addClass('opacity-03').find('input[name="multi-remove"]').prop('checked', true);
         }
-    }).on("mouseup", function(e) {
+    }).on("mouseup", function (e) {
         Profile.isMouseDown = false;
     })
 

@@ -64,6 +64,7 @@ class profile_Controller extends main_Controller
                 if (is_array($data['publication'])) {
                     foreach ($data['publication'] as $item) {
                         $_SESSION['publication']['fields'][] = array(
+                            'isHidden' => $item['isHidden'],
                             'style' => $item['style'],
                             'field' => $item['tag_category'],
                             'value' => $item['content']
@@ -450,6 +451,13 @@ class profile_Controller extends main_Controller
         session_start();
         $_SESSION['publication'] = array();
         print_r(json_encode(array('result' => empty($_SESSION['publication']) ? true : false)));
+    }
+
+    protected function hideImg($config, $data)
+    {
+        session_start();
+        $_SESSION['publication']['fields'][$data['id']]['isHidden'] = $data['isHidden'];
+        print_r(json_encode(array('result' =>  $_SESSION['publication']['fields'][$data['id']]['isHidden'])));
     }
 
 

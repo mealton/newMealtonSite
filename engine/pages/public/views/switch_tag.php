@@ -12,7 +12,7 @@
     <?php
     switch ($tag_category) {
         case ('image'):
-            echo "<img src='" . str_replace('preview', 'fullsize', $content) . "' class='public-image'>";
+            echo $isHidden ? "" : "<img src='" . str_replace('preview', 'fullsize', $content) . "' class='public-image'>";
             break;
         case ('video'):
             echo "

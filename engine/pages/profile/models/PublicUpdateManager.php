@@ -86,14 +86,15 @@ class PublicUpdateManager extends main_Model
         //Добавляем новый контент и удаляем старый
 
         $sql = 'INSERT INTO `new_project_publications_content`
-                  (`publication_id`,`tag_category`,`content`,`style`,`token`)
+                  (`publication_id`,`tag_category`,`content`,`style`,`token`,`isHidden`)
                     VALUES ';
         $values = '';
         foreach ($this->arguments['fields'] as $field) {
             $tag = $field['field'];
             $content = addslashes($field['value']);
             $style = $field['style'];
-            $values .= '(' . $this->arguments['post_id'] . ',"' . $tag . '","' . $content . '","' . $style . '",' . $token . '),';
+            $isHidden = $field['isHidden'];
+            $values .= '(' . $this->arguments['post_id'] . ',"' . $tag . '","' . $content . '","' . $style . '",' . $token . ',' . $isHidden . '),';
         }
         $sql .= trim($values, ',');
         $result = db::getInstance()->QueryInsert($sql);

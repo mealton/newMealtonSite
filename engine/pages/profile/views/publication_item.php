@@ -22,6 +22,12 @@ switch ($field) {
             <div class="controls">
                 <fieldset>
                     <div class="flex" style="justify-content: flex-end;">
+                        <input type="checkbox" name="isHidden"
+                               title="Не показывать изображение в публикации"
+                               style="margin-right: 15px;"
+                               data-id="<?= $k ?>"
+                            <?= $_SESSION['publication']['isHidden'] == 1 ? 'checked' : '' ?>
+                        >
                         <input type="checkbox" name="image_default" class="fa fa-checkbox"
                                data-value="<?= $value ?>"
                                title="Сделать изображением по умолчанию"

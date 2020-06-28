@@ -296,31 +296,24 @@ class public_Controller extends main_Controller
 
     protected function commentLike($config, $data)
     {
-        if(($data['likeDislike'] == 'likes' && $_COOKIE['com-like-' . $data['id']]) ||
-            ($data['likeDislike'] == 'dislikes' && $_COOKIE['com-dislike-' . $data['id']])  ){
-            print_r(json_encode(array('result' => 'false')));
-            return false;
+        $likeDislike = $data['likeDislike'];
+        $id = $data['id'];
+        if($_COOKIE['com-' . $likeDislike . '-' . $id]){
+            $sql = "UPDATE `new_project_comments`
+                    SET `$likeDislike` = `$likeDislike` - 1
+                        WHERE `id` = " . $id;
+            setcookie('com-' . $likeDislike . '-' . $id, true, time() - 30 * 24 * 3600, "/");
+        }else{
+            $sql = "UPDATE `new_project_comments`
+                    SET `$likeDislike` = `$likeDislike` + 1
+                        WHERE `id` = " . $id;
+            setcookie('com-' . $likeDislike . '-' . $id, true, time() + 30 * 24 * 3600, "/");
         }
-
-        if ($data['likeDislike'] == 'likes' && $_COOKIE['com-dislike-' . $data['id']]) {
-            setcookie('com-dislike-' . $data['id'], true, time() - 30 * 24 * 3600, "/");
-            $data['act'] = 'default_dislike';
-        } elseif ($data['likeDislike'] == 'likes' && !$_COOKIE['com-dislike-' . $data['id']]) {
-            setcookie('com-like-' . $data['id'], true, time() + 30 * 24 * 3600, "/");
-            $data['act'] = 'set_like';
-        } elseif ($data['likeDislike'] == 'dislikes' && $_COOKIE['com-like-' . $data['id']]) {
-            setcookie('com-like-' . $data['id'], true, time() - 30 * 24 * 3600, "/");
-            $data['act'] = 'default_like';
-        } elseif ($data['likeDislike'] == 'dislikes' && !$_COOKIE['com-like-' . $data['id']]) {
-            setcookie('com-dislike-' . $data['id'], true, time() + 30 * 24 * 3600, "/");
-            $data['act'] = 'set_dislike';
-        }
-
-        $this->executeModel($config, 'public', 'CommentLike', $data);
-        $data = $this->executeModel($config, 'public', 'Comments', array('action' => 'get', 'post_id' => $data['post_id']));
+        
+        $data['sql'] = $sql;
+        $data = $this->executeModel($config, 'public', 'CommentLike', $data);
         $result = !empty($data[0]) ? 'true' : 'false';
-        $html = $this->commentsHTML($data);
-        print_r(json_encode(array('result' => $result, 'comment' => $html, 'data' => $data)));
+        print_r(json_encode(array('result' => $result, 'data' => $data)));
         return true;
     }
 

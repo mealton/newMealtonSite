@@ -40,7 +40,7 @@ $id = 'player' . rand(0, 1000);
                                 <a class="btn btn-sm btn-default btn-hover-danger comment-like" href="#"
                                    data-id="<?= $c_id ?>" data-post-id="<?= $post_id ?>"><i
                                         class="fa fa-thumbs-down"></i> <span
-                                        class="likes-counter"><?= $dislikes ?></span></a>
+                                        class="dislikes-counter"><?= $dislikes ?></span></a>
                             </div>
                             <a class="btn btn-sm btn-default btn-hover-primary comment-reply-btn" href="#"
                                data-id="<?= $c_id ?>">Ответить</a>

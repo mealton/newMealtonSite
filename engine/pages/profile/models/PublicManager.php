@@ -50,14 +50,15 @@ class PublicManager extends main_Model
         $id = db::getInstance()->QueryInsert($sql);
 
         $sql = 'INSERT INTO `new_project_publications_content`
-                  (`publication_id`,`tag_category`,`content`,`style`,`token`)
+                  (`publication_id`,`tag_category`,`content`,`style`,`token`,`isHidden`)
                     VALUES ';
         $values = '';
         foreach ($this->arguments['fields'] as $field){
             $tag = $field['field'];
             $content = addslashes($field['value']);
             $style = $field['style'];
-            $values .= '(' . $id . ',"' . $tag . '","' . $content . '","' . $style . '",' . $token . '),';
+            $isHidden = $field['isHidden'];
+            $values .= '(' . $id . ',"' . $tag . '","' . $content . '","' . $style . '",' . $token . ',' . $isHidden . '),';
         }
         $sql .= trim($values, ',');
         db::getInstance()->QueryInsert($sql);
