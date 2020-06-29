@@ -754,8 +754,16 @@ const Profile = {
             isHidden: checkbox.checked ? 1 : 0
         };
 
+        let img = $(checkbox).closest('.edit-item').find('.public-img-item');
+
         let callback = function (response) {
-            console.log(response);
+            console.log(img[0], response);
+            response = parseInt(response.result);
+            if(response == 1){
+                img.addClass('opacity-4');
+            }else{
+                img.removeClass('opacity-4');
+            }
         };
         ajax(location.href, 'JSON', data, callback);
     }

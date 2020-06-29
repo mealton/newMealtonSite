@@ -129,4 +129,4 @@
 <?php
 session_start();
 //$_SESSION['publication'] = array();
-main_Model::pre($_SESSION['publication']);
+//main_Model::pre($_SESSION['publication']);

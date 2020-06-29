@@ -15,6 +15,8 @@ foreach ($cssParse as $item) {
 }
 
 session_start();
+//main_Model::pre($_SESSION['publication']);
+
 switch ($field) {
     case ('image'):
         ?>
@@ -22,17 +24,23 @@ switch ($field) {
             <div class="controls">
                 <fieldset>
                     <div class="flex" style="justify-content: flex-end;">
-                        <input type="checkbox" name="isHidden"
-                               title="Не показывать изображение в публикации"
-                               style="margin-right: 15px;"
-                               data-id="<?= $k ?>"
-                            <?= $_SESSION['publication']['isHidden'] == 1 ? 'checked' : '' ?>
-                        >
+                        <label>
+                            <strong>Скрыть&nbsp;</strong>
+                            <input type="checkbox" name="isHidden"
+                                   title="Не показывать изображение в публикации"
+                                   style="margin-right: 15px;"
+                                   data-id="<?= $k ?>"
+                                <?= $_SESSION['publication']['fields'][$k]['isHidden'] ? 'checked' : '' ?>
+                            >
+                        </label>
+                        <label>
+                            <strong>По умолчанию&nbsp;</strong>
                         <input type="checkbox" name="image_default" class="fa fa-checkbox"
                                data-value="<?= $value ?>"
                                title="Сделать изображением по умолчанию"
                             <?= $_SESSION['publication']['image_default'] == $value ? 'checked' : '' ?>
                         >
+                        </label>
                         <i class="fa fa-pencil-square-o" aria-hidden="true" data-id="<?= $k ?>" data-view="image_field"
                            title="Редактировать" onclick="Profile.editItem(this)"></i>
                         <i class="fa fa-times" aria-hidden="true" data-id="<?= $k ?>" title="Удалить"></i>
@@ -43,7 +51,10 @@ switch ($field) {
 
 
             <a href="<?= str_replace('preview', 'fullsize', $value) ?>" title="Открыть изображение в новой вкладке"
-               target="_blank"><img src="<?= str_replace('preview', 'fullsize', $value) ?>" alt="#"></a>
+               target="_blank">
+                <img src="<?= str_replace('preview', 'fullsize', $value) ?>"
+                     alt="#" class="<?= $_SESSION['publication']['fields'][$k]['isHidden'] ? 'public-img-item opacity-4' : 'public-img-item' ?>">
+            </a>
             <span class="hidden value-content"><?= $value ?></span>
             <br>
             <select name="insert_after" data-id="<?= $k ?>">

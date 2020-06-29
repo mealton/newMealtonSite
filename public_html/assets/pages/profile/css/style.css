@@ -479,7 +479,21 @@ li.save-changes-label {
     color: #ffffff;
 }
 
-.set-to-all-text-fields legend{
+.set-to-all-text-fields legend {
     text-align: left !important;
     margin: 0 !important;
+}
+
+.public-img-item {
+    transition: opacity .2s ease-in-out;
+    opacity: 1;
+}
+
+.opacity-4 {
+    opacity: .4;
+}
+
+.controls .flex label{
+    cursor: pointer;
+    font-size: 14px;
 }
