@@ -203,9 +203,10 @@ div.uploaded-image .fa-window-close {
 }
 
 .profile-image {
-    width: auto;
-    height: auto;
-    max-width: 500px;
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    background-size: cover;
 }
 
 li:after {
@@ -485,7 +486,7 @@ li.save-changes-label {
 }
 
 .public-img-item {
-    transition: opacity .2s ease-in-out;
+    transition: opacity .5s ease-in-out;
     opacity: 1;
 }
 

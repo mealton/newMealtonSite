@@ -115,6 +115,7 @@ switch ($field) {
                     </div>
                 </fieldset>
             </div>
+            <h6><i><?= main_Controller::get_youtube_title(end(explode("/", $value))) ?></i></h6>
             <div id="video-preview<?= ++$i ?>" data-plyr-provider="youtube"
                  data-plyr-embed-id="<?= end(explode("/", $value)) ?>"></div>
             <span class="hidden value-content"><?= $value ?></span>

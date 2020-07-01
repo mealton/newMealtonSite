@@ -16,6 +16,7 @@
             break;
         case ('video'):
             echo "
+            <br><h6><i>" . main_Controller::get_youtube_title(end(explode("/", $content))) . "</i></h6>
             <div data-id='plyr-" . ++$i . "'></div>
             <div id='plyr" . $i . "' data-plyr-provider='youtube' data-plyr-embed-id='" . end(explode("/", $content)) . "'></div>
                     <script>

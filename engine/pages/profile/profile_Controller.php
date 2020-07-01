@@ -8,7 +8,7 @@ class profile_Controller extends main_Controller
     {
         session_start();
 
-        if(!$_SESSION['admin']){
+        if(!$_SESSION['auth'] || !$_SESSION['userId']){
             header('Location:/');
         }
 
@@ -91,10 +91,10 @@ class profile_Controller extends main_Controller
         } else {
             $title = $data['userdata'][0]['name'] ? $data['userdata'][0]['name'] : $data['userdata'][0]['usernname'];
 
-            $getUserPublications = $this->render('profile', array(
+            $getUserPublications = !empty($data['getUserPublications']) ?$this->render('profile', array(
                 'view' => 'userPubicItem',
                 'data' => $data['getUserPublications']
-            ));
+            )) : '<h2>У вас пока еще нет ни одной публикации</h2>';
 
            // unset($_SESSION['publication']['fields']['all']);
 
@@ -134,10 +134,10 @@ class profile_Controller extends main_Controller
                 );
             }
 
-            $data['userdata'][0]['pagination'] = $this->render('profile', array(
+            $data['userdata'][0]['pagination'] = $pages > 1 ? $this->render('profile', array(
                 'view' => 'pagination',
-                'data' => count($pagination) > 1 ? $pagination : array()
-            ));
+                'data' => $pagination
+            )) : '';
             
             $this->executeView('profile', array(
                 array('view' => 'get_title', 'data' => array('title' => $title, 'description' => 'Страничка пользователя'), 'container' => 'title'),
@@ -190,6 +190,7 @@ class profile_Controller extends main_Controller
                         array(
                             array(
                                 'style' => '',
+                                'isHidden' => 0,
                                 'field' => $data['field'],
                                 'value' => $value
                             )
@@ -204,6 +205,7 @@ class profile_Controller extends main_Controller
                     array(
                         array(
                             'style' => '',
+                            'isHidden' => 0,
                             'field' => $data['field'],
                             'value' => $data['value']
                         )
@@ -216,6 +218,7 @@ class profile_Controller extends main_Controller
                 foreach ($data['value'] as $value) {
                     $_SESSION['publication']['fields'][] = array(
                         'style' => '',
+                        'isHidden' => 0,
                         'field' => $data['field'],
                         'value' => $value
                     );
@@ -223,6 +226,7 @@ class profile_Controller extends main_Controller
             } else {
                 $_SESSION['publication']['fields'][] = array(
                     'style' => '',
+                    'isHidden' => 0,
                     'field' => $data['field'],
                     'value' => $data['value']
                 );

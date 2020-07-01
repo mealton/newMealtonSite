@@ -49,7 +49,8 @@
             <h3>Личные данные</h3>
             <fieldset>
                 <?php if ($profile_image): ?>
-                    <img src="<?= $profile_image ?>" alt="" class="profile-image">
+                    <!--img src="<?= $profile_image ?>" alt="" class="profile-image" -->
+                    <div class="profile-image" style="background-image: url('<?= $profile_image ?>');"></div>
                     <hr>
                 <?php endif; ?>
                 <div class="form-data">

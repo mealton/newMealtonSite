@@ -57,7 +57,7 @@ class PublicManager extends main_Model
             $tag = $field['field'];
             $content = addslashes($field['value']);
             $style = $field['style'];
-            $isHidden = $field['isHidden'];
+            $isHidden = $field['isHidden'] ? $field['isHidden'] : 0;
             $values .= '(' . $id . ',"' . $tag . '","' . $content . '","' . $style . '",' . $token . ',' . $isHidden . '),';
         }
         $sql .= trim($values, ',');

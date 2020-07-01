@@ -22,7 +22,7 @@ class getSidebar extends main_Model
 
         $sql = "SELECT `publics`.*,`publics`.`id` as `public_id`,
                   (SELECT COUNT(*) FROM `new_project_publications_content`
-                    WHERE `publication_id` = `publics`.`id` AND `tag_category` = 'image') as `count_img`,
+                    WHERE `publication_id` = `publics`.`id` AND `tag_category` = 'image' AND `isHidden` != 1) as `count_img`,
                   (SELECT COUNT(*) FROM `new_project_publications_content`
                     WHERE `publication_id` = `publics`.`id` AND `tag_category` = 'video') as `count_video`,
                   (SELECT `content` FROM `new_project_publications_content`

@@ -115,4 +115,4 @@ session_start();
 <?php
 session_start();
 //$_SESSION['publication'] = array();
-//main_Model::pre($_SESSION['publication']['fields']);
+main_Model::pre($_SESSION['publication']);
