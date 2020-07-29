@@ -8,6 +8,17 @@ class index_Controller extends main_Controller
     {
         $data = $this->executeModel($config, 'index', 'get_Content', $query);
 
+        //main_Model::pre($data);
+
+        foreach ($data as $k => $row){
+            $data[$k]['hashtags'] = !empty($data[$k]['hashtags']) ? $this->render('public', array(
+                'view' => 'hashtag',
+                'data' => $row['hashtags-counter']
+            )) : '';
+        }
+
+        //main_Model::pre($data);
+
         $pagination = array();
         $pages = $data[0]['pages'];
         $page = 1;

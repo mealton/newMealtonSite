@@ -117,7 +117,7 @@ class Comments extends main_Model
             return false;
 
 
-        $comment = addslashes(strval($comment['comment']));
+        $comment = addslashes(main_Controller::textConverter($comment['comment']));
 
         $sql = "INSERT INTO `new_project_comments` (`post_id`, `user_id`, `comment`, `status`, `is_reply`, `is_replied`, `comment_id_reply`) 
                   VALUES 

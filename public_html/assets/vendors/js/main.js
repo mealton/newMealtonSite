@@ -68,6 +68,7 @@ const Signin = {
             console.log(response);
             if (response.result === "true") {
                 $('ul.nav.navbar-nav').html(response.navidation_html);
+                window.location.href = "/";
             }
         };
         ajax(location.href, 'JSON', data, callback);
@@ -263,8 +264,11 @@ const Search = {
             console.log(response);
             if (response.data.length > 0) {
                 $('#search-options').show().html(response.html);
+                $('.search-option').each(function (i, el) {
+                    el.innerHTML = el.innerText.replace(new RegExp(input.value, 'gi'), '<mark>$&</mark>')
+                });
             } else {
-                input.value = $this.switchKeyboard(input.value);
+                //input.value = $this.switchKeyboard(input.value);
             }
         };
         ajax(location.href, 'JSON', data, callback);

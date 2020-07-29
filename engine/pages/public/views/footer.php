@@ -26,20 +26,23 @@ session_start();
 
 <?php if ($hashtags): ?>
     <hr>
-    <strong>Метки:</strong>&nbsp;<?= main_Model::getTagsString($hashtags) ?>
+    <!--<strong>Метки:</strong>&nbsp;--><?/*= main_Model::getTagsString($hashtags) */?>
+    <div class="heshtags">
+        <?= $hashtags ?>
+    </div>
 <?php endif; ?>
 
 <hr>
-<?php if (explode('/', $_GET['query'])[1] != 'preview'): ?>
-    <a href="<?= $referer ?>#post-<?= $publication_id ?>" data-content="index"
-       data-menu="<?= $_SESSION['config']['menu'] ?>" class="session-config">
+<?php /*if (explode('/', $_GET['query'])[1] != 'preview'): */?><!--
+    <a href="<?/*= $referer */?>#post-<?/*= $publication_id */?>" data-content="index"
+       data-menu="<?/*= $_SESSION['config']['menu'] */?>" class="session-config">
         <button class="btn btn-info">Назад</button>
     </a>
-<?php else: ?>
+<?php /*else: */?>
     <a href="/profile/" data-content="profile" class="session-config">
         <button class="btn btn-info">Назад</button>
     </a>
-<?php endif; ?>
+--><?php /*endif; */?>
 <?php if ($_SESSION['login'] === $username): ?>
     <a href="/profile/<?= $publication_id . '::' . $alias ?>" data-content="profile" class="session-config">
         <button class="btn btn-primary">Редактировать</button>

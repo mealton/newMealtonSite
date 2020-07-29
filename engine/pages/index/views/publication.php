@@ -34,7 +34,7 @@
             <p><?= mb_substr($description, 0, 300) ?>...</p>
         </div>
         <hr>
-        <p>
+        <p class="public-item-info">
             <i class="fa fa-newspaper-o" aria-hidden="true"></i>&nbsp;&nbsp;<a
                 href="/category/<?= $rubric_url_name ?>"><?= $rubric_name ?></a><br/>
             <!--<i class="fa fa-user-circle-o"></i>-->
@@ -51,7 +51,7 @@
             <?php endif; ?>
 
             <?php if ($hashtags): ?>
-                <i class="fa fa-tags"></i>&nbsp;&nbsp;<?= main_Model::getTagsString($hashtags) ?>
+                <i class="fa fa-tags"></i>&nbsp;&nbsp;<?= $hashtags ?>
             <?php endif; ?>
         </p>
     </div>

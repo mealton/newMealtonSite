@@ -47,7 +47,18 @@ class get_Content extends main_Model
 
         //main_Model::pre($sql);
 
-        $this->data = db::getInstance()->Select($sql);
+        $data = db::getInstance()->Select($sql);
+
+        foreach ($data as $k => $row){
+            $sql = 'SELECT `hashtag`, 
+                  (SELECT COUNT(`id`) FROM `new_project_hashtags` WHERE `hashtag` = `h`.`hashtag`) as `count` 
+                    FROM `new_project_hashtags` as `h`
+                      WHERE `public_id` = ' . $row['public_id'];
+
+            $data[$k]['hashtags-counter'] = db::getInstance()->Select($sql);
+        }
+
+        $this->data = $data;
     }
 
 

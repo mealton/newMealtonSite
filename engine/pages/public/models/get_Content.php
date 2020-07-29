@@ -43,7 +43,21 @@ class get_Content extends main_Model
                         RIGHT JOIN `new_project_users` as `users` ON `posts`.`user_id` = `users`.`id`
                             RIGHT JOIN `new_project_publications_rubrics` as `category` ON `posts`.`category` = `category`.`id`
                     WHERE `posts`.`id` = ' . $id;
-        return db::getInstance()->Select($sql);
+
+
+        $data = db::getInstance()->Select($sql);
+
+        $sql = 'SELECT `hashtag`, 
+                  (SELECT COUNT(`id`) FROM `new_project_hashtags` WHERE `hashtag` = `h`.`hashtag`) as `count` 
+                    FROM `new_project_hashtags` as `h`
+                      WHERE `public_id` = ' . $id;
+
+        $data[0]['hashtags-counter'] = db::getInstance()->Select($sql);
+
+        return $data;
     }
+
+
+
 
 }

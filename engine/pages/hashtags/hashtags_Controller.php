@@ -11,6 +11,13 @@ class hashtags_Controller extends main_Controller
         $hashtag = $data[0]['hashtag'];
         $hashtag = mb_strtoupper(mb_substr($hashtag, 0, 1, 'UTF-8'), 'UTF-8') . mb_substr($hashtag, 1, mb_strlen($hashtag, 'UTF-8'), 'UTF-8');
 
+        foreach ($data as $k => $row){
+            $data[$k]['hashtags'] = !empty($data[$k]['hashtags']) ? $this->render('public', array(
+                'view' => 'hashtag',
+                'data' => $row['hashtags-counter']
+            )) : '';
+        }
+
         $pagination = array();
         $pages = $data[0]['pages'];
         $page = 1;

@@ -9,6 +9,13 @@ class find_Controller extends main_Controller
         $title = count($query) > 1 ? urldecode($query[1]) : 'Результаты поиска';
         $data = $this->executeModel($config, 'find', 'get_Content', $query);
 
+        foreach ($data as $k => $row){
+            $data[$k]['hashtags'] = !empty($data[$k]['hashtags']) ? $this->render('public', array(
+                'view' => 'hashtag',
+                'data' => $row['hashtags-counter']
+            )) : '';
+        }
+
         $pagination = array();
         $pages = $data[0]['pages'];
         $page = 1;
@@ -32,11 +39,11 @@ class find_Controller extends main_Controller
     {
         $search = $data['value'];
         $data = $this->executeModel($config, 'index', 'Search', $data);
-        if(is_array($data)){
+       /* if(is_array($data)){
             foreach ($data as $k => $row){
                 $data[$k]['long_title'] = $this->mb_str_replace( mb_strtolower($search), "<mark>" . addslashes($search) . "</mark>", mb_strtolower($data[$k]['long_title']));
             }
-        }
+        }*/
         print_r(json_encode(array(
             'data' => $data,
             'search' => $search,

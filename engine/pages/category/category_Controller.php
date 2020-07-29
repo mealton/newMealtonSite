@@ -15,6 +15,13 @@ class category_Controller extends main_Controller
         $category = count($query) > 1 ? $data[0]['rubric_name'] : 'Все категории';
         $_SESSION['category'] = $category === 'Все категории' ? 'категория' : $category;
 
+        foreach ($data as $k => $row){
+            $data[$k]['hashtags'] = !empty($data[$k]['hashtags']) ? $this->render('public', array(
+                'view' => 'hashtag',
+                'data' => $row['hashtags-counter']
+            )) : '';
+        }
+
         if (count($query) > 1) {
 
             $pagination = array();

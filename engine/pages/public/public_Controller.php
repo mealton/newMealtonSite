@@ -9,7 +9,7 @@ class public_Controller extends main_Controller
         session_start();
         $refer = array_values(array_diff(explode('/', str_replace('http://' . $_SERVER['HTTP_HOST'], '', urldecode($_SERVER['HTTP_REFERER']))), array('')));
 
-        if($refer[0] != 'public'){
+        if ($refer[0] != 'public') {
             $_SESSION['condition'] = array(
                 'condition' => $refer[0],
                 'value' => $refer[1],
@@ -21,10 +21,11 @@ class public_Controller extends main_Controller
             $this->getSessionPublic() :
             $this->executeModel($config, 'public', 'get_Content', array('id' => current(explode("::", $alias))));
 
+
         $short_title = $data[0]['short_title'];
         $long_title = $data[0]['long_title'] ? $data[0]['long_title'] : $short_title;
         $description = $data[0]['description'] ? $data[0]['description'] : $long_title;
-        
+
         if (!strpos($_SERVER['HTTP_REFERER'], '/profile/'))
             $_SESSION['referer'] = $_SERVER['HTTP_REFERER'];
 
@@ -51,10 +52,21 @@ class public_Controller extends main_Controller
 
         $comments = $this->executeModel($config, 'public', 'Comments', array('post_id' => $data[0]['publication_id'], 'action' => 'get'));
 
+        $hashtags =
+            '<span class="hashtag-item">
+                <a href="/category#hashtags">
+                    <span>все теги</span>
+                </a>
+            </span>' . (!empty($data[0]['hashtags-counter']) ?
+            $this->render('public', array(
+                'view' => 'hashtag',
+                'data' => $data[0]['hashtags-counter']
+            )) : '');
 
-        $data[0]['comments'] =  $this->commentsHTML($comments);
+        //main_Model::pre($hashtags);
 
-        //main_Model::pre($comments);
+
+        $data[0]['comments'] = $this->commentsHTML($comments);
 
         $this->executeView('public', array(
             array('view' => 'onePublicTitle',
@@ -72,7 +84,7 @@ class public_Controller extends main_Controller
             // array('view' => 'get_publication_item', 'data' => $data, 'container' => 'publication'),
             array('view' => 'switch_tag', 'data' => $data, 'container' => 'publication'),
             array('view' => 'footer', 'data' => array(
-                'dataFooter' => $dataFooter,
+                //'dataFooter' => $dataFooter,
                 'username' => $data[0]['username'],
                 'profile_image' => $data[0]['profile_image'],
                 'publication_id' => $data[0]['publication_id'],
@@ -80,7 +92,7 @@ class public_Controller extends main_Controller
                 'likes' => $data[0]['likes'],
                 'dislikes' => $data[0]['dislikes'],
                 'import' => $data[0]['imported'],
-                'hashtags' => $data[0]['hashtags'],
+                'hashtags' => $hashtags,
                 'referer' => $_SESSION['referer'],
                 'user_id' => $_SESSION['userId'],
                 'prev_next_html' => $prev_next_html,
@@ -159,27 +171,27 @@ class public_Controller extends main_Controller
 
     private function commentsHTML($comments)
     {
-        if(!is_array($comments) || empty($comments))
+        if (!is_array($comments) || empty($comments))
             return '';
 
-        foreach ($comments as $key => $comment){
-            if(!empty($comment['img'])){
+        foreach ($comments as $key => $comment) {
+            if (!empty($comment['img'])) {
                 $comments[$key]['img'] = $this->render('public', array(
                     'view' => 'comment_image',
                     'data' => $comment['img']
                 ));
-            }else{
+            } else {
                 $comments[$key]['img'] = '';
             }
-            if(!empty($comment['replies'])){
+            if (!empty($comment['replies'])) {
 
-                foreach ($comment['replies'] as $i => $reply){
-                    if(!empty($reply['img'])){
+                foreach ($comment['replies'] as $i => $reply) {
+                    if (!empty($reply['img'])) {
                         $comments[$key]['replies'][$i]['img'] = $this->render('public', array(
                             'view' => 'comment_image',
                             'data' => $reply['img']
                         ));
-                    }else{
+                    } else {
                         $comments[$key]['replies'][$i]['img'] = '';
                     }
                 }
@@ -298,18 +310,18 @@ class public_Controller extends main_Controller
     {
         $likeDislike = $data['likeDislike'];
         $id = $data['id'];
-        if($_COOKIE['com-' . $likeDislike . '-' . $id]){
+        if ($_COOKIE['com-' . $likeDislike . '-' . $id]) {
             $sql = "UPDATE `new_project_comments`
                     SET `$likeDislike` = `$likeDislike` - 1
                         WHERE `id` = " . $id;
             setcookie('com-' . $likeDislike . '-' . $id, true, time() - 30 * 24 * 3600, "/");
-        }else{
+        } else {
             $sql = "UPDATE `new_project_comments`
                     SET `$likeDislike` = `$likeDislike` + 1
                         WHERE `id` = " . $id;
             setcookie('com-' . $likeDislike . '-' . $id, true, time() + 30 * 24 * 3600, "/");
         }
-        
+
         $data['sql'] = $sql;
         $data = $this->executeModel($config, 'public', 'CommentLike', $data);
         $result = !empty($data[0]) ? 'true' : 'false';
